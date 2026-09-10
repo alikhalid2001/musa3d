@@ -113,7 +113,7 @@ export default function Home() {
                 onClick={scrollToInstructors}
                 className="w-full py-3 rounded-xl bg-[#E8E4D9] text-[#112222] font-bold text-xs hover:bg-white transition-all shadow-lg text-center cursor-pointer"
               >
-                الاستاذة
+                الاساتذة
               </button>
               <button 
                 onClick={scrollToServices}
