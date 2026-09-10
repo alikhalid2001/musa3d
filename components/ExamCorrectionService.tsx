@@ -28,7 +28,7 @@ export default function ExamCorrectionService() {
 
       {/* Dropdown Content */}
       {isOpen && (
-        <p-8 className="p-8 border-t border-white/10 bg-[#070e0e]/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center block">
+        <div className="p-8 border-t border-white/10 bg-[#070e0e]/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-4 text-right">
             <h4 className="text-xl font-semibold text-teal-300">آلية التصحيح الآمن والمضمون</h4>
             <p className="text-gray-300 leading-relaxed text-sm">
@@ -44,7 +44,7 @@ export default function ExamCorrectionService() {
             <div className="text-sm font-bold text-[#E8E4D9]">حماية عالية لبيانات الطلاب</div>
             <p className="text-xs text-gray-400">توثيق فوري للدرجات واستخراج تقارير دقيقة بضغطة زر واحدة.</p>
           </div>
-        </p-8>
+        </div>
       )}
     </div>
   );
