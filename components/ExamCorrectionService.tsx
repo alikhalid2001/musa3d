@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import ModelViewer from './ModelViewer';
 
 export default function ExamCorrectionService() {
-  const [activeTab, setActiveTab] = useState<'correction' | 'analysis' | 'reports'>('correction');
+  const [activeTab, setActiveTab] = useState<'correction' | 'analysis' | 'reports' | 'monitoring'>('correction');
 
   return (
     <div className="max-w-5xl mx-auto my-8 space-y-6">
@@ -47,6 +47,17 @@ export default function ExamCorrectionService() {
           >
             تقارير PDF تلقائية
           </button>
+
+          <button
+            onClick={() => setActiveTab('monitoring')}
+            className={`px-5 py-3 rounded-2xl text-sm font-bold transition-all cursor-pointer ${
+              activeTab === 'monitoring'
+                ? 'bg-teal-500 text-[#070e0e] shadow-lg shadow-teal-500/30 scale-105'
+                : 'bg-[#070e0e] text-gray-300 border border-teal-500/30 hover:bg-teal-500/10'
+            }`}
+          >
+            إدارة المراقبة
+          </button>
         </div>
       </div>
 
@@ -83,8 +94,7 @@ export default function ExamCorrectionService() {
             <ModelViewer modelPath="/scale.glb" />
           </div>
         </div>
-      ) : (
-        /* PDF Reports Section */
+      ) : activeTab === 'reports' ? (
         <div className="bg-[#0b1616]/95 border-2 border-teal-500/40 rounded-3xl overflow-hidden shadow-2xl p-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="space-y-5 text-right">
             <h4 className="text-2xl font-bold text-teal-300">خدمة تقارير PDF تلقائية</h4>
@@ -98,6 +108,23 @@ export default function ExamCorrectionService() {
 
           <div className="w-full h-80 bg-[#040808] rounded-2xl border border-teal-500/30 overflow-hidden relative flex items-center justify-center shadow-inner">
             <ModelViewer modelPath="/list.glb" />
+          </div>
+        </div>
+      ) : (
+        /* Monitoring Management Section */
+        <div className="bg-[#0b1616]/95 border-2 border-teal-500/40 rounded-3xl overflow-hidden shadow-2xl p-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <div className="space-y-5 text-right">
+            <h4 className="text-2xl font-bold text-teal-300">نظام إدارة المراقبة</h4>
+            <p className="text-gray-200 text-base leading-relaxed">
+              تخطيط وتوزيع لجان المراقبة والقاعات الامتحانية بمرونة وكفاءة عالية، لضمان سير الامتحانات بسلاسة وتنظيم متكامل للمشرفين والكوادر.
+            </p>
+            <div className="inline-block px-4 py-2 bg-teal-500/15 border border-teal-500/30 rounded-xl text-teal-300 text-sm font-semibold">
+              👁️ تنظيم وتغطية شاملة
+            </div>
+          </div>
+
+          <div className="w-full h-80 bg-[#040808] rounded-2xl border border-teal-500/30 overflow-hidden relative flex items-center justify-center shadow-inner">
+            <ModelViewer modelPath="/teles.glb" />
           </div>
         </div>
       )}
