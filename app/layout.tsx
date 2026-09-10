@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Musa3d Foundation | مستقبلك التعليمي بدقة غير متناهية",
   description: "المساعد - نظام إدارة وتصحيح درجات الطلاب",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
