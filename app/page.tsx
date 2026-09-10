@@ -59,7 +59,7 @@ function CentralLogo({ scrollProgress }: { scrollProgress: any }) {
 }
 
 useGLTF.preload('/logo.glb');
-
+import ExamCorrectionService from '@/components/ExamCorrectionService';
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
@@ -78,7 +78,20 @@ export default function Home() {
     instructorsRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  return (export default function Home() {
   return (
+    <main className="min-h-screen bg-slate-950 py-12 px-4">
+      <div className="max-w-5xl mx-auto">
+        {/* Header / Title */}
+        <h1 className="text-4xl font-bold text-center text-white mb-8">مؤسسة المساعد التعليمية</h1>
+
+        {/* Your 3D Interactive Dropdown Service */}
+        <ExamCorrectionService />
+
+      </div>
+    </main>
+  );
+}
     <div className="w-full bg-[#070e0e] text-[#E8E4D9] font-sans overflow-x-hidden overflow-y-auto min-h-screen">
       
       {/* ================= HERO SECTION ================= */}
