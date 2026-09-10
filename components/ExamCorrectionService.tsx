@@ -1,10 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
-import '@google/model-viewer';
+import React, { useState, useEffect } from 'react';
 
 export default function ExamCorrectionService() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    import('@google/model-viewer');
+  }, []);
 
   return (
     <div className="max-w-4xl mx-auto my-8 bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300">
@@ -29,9 +34,9 @@ export default function ExamCorrectionService() {
 
       {/* Dropdown Content with 3D Model & Description */}
       {isOpen && (
-        <div className="p-8 border-t border-slate-800 bg-slate-950/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center animate-fadeIn">
+        <div className="p-8 border-t border-slate-800 bg-slate-950/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Professional Description */}
-          <div className="space-y-4">
+          <div className="space-y-4 text-right">
             <h4 className="text-xl font-semibold text-blue-400">آلية التصحيح الآمن والمضمون</h4>
             <p className="text-slate-300 leading-relaxed text-lg">
               تتم عملية تصحيح الأوراق الامتحانية بدقة وسرعة عاليتين في مكان مخصص ومحفوظ حيث تكون ورقة الطالب مؤمنة.
@@ -42,17 +47,21 @@ export default function ExamCorrectionService() {
           </div>
 
           {/* 3D GLB Model Viewer */}
-          <div className="w-full h-72 bg-slate-900/80 rounded-2xl border border-slate-800 overflow-hidden relative shadow-inner">
-            {/* @ts-ignore */}
-            <model-viewer
-              src="/your-model-file.glb"
-              alt="تصحيح الأوراق ثلاثي الأبعاد"
-              auto-rotate
-              camera-controls
-              ar
-              style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
-            ></model-viewer>
-            <span className="absolute bottom-3 right-3 text-xs text-slate-500 bg-slate-900/80 px-2 py-1 rounded-md border border-slate-800">
+          <div className="w-full h-72 bg-slate-900/80 rounded-2xl border border-slate-800 overflow-hidden relative shadow-inner flex items-center justify-center">
+            {isClient ? (
+              // @ts-ignore
+              <model-viewer
+                src="/exam-model.glb"
+                alt="تصحيح الأوراق ثلاثي الأبعاد"
+                auto-rotate
+                camera-controls
+                ar
+                style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
+              ></model-viewer>
+            ) : (
+              <p className="text-slate-500 text-sm">جاري تحميل العرض ثلاثي الأبعاد...</p>
+            )}
+            <span className="absolute bottom-3 right-3 text-xs text-slate-500 bg-slate-900/80 px-2 py-1 rounded-md border border-slate-800 z-10">
               اسحب للتدوير 3D 🖱️
             </span>
           </div>
