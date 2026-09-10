@@ -465,4 +465,36 @@ export default function Home() {
 
     </div>
   );
+}export default function Features3D() {
+  return (
+    <section className="py-20 px-6 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+      {/* Feature 1: تصحيح الأوراق */}
+      <div className="group relative bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-3xl border border-slate-700 shadow-[0_20px_50px_rgba(8,112,184,0.1)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_70px_rgba(59,130,246,0.3)]">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
+        <div className="relative z-10">
+          <div className="w-14 h-14 bg-blue-600/20 border border-blue-500/30 rounded-2xl flex items-center justify-center text-blue-400 mb-6 text-2xl shadow-inner">
+            📝
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-3">تصحيح الأوراق الذكي</h3>
+          <p className="text-slate-400 leading-relaxed">
+            نظام متقدم لتصحيح أوراق الامتحانات بدقة وسرعة عالية، مع رصد الدرجات واستخراج النتائج فورياً.
+          </p>
+        </div>
+      </div>
+
+      {/* Feature 2: تقارير PDF تلقائية */}
+      <div className="group relative bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-3xl border border-slate-700 shadow-[0_20px_50px_rgba(8,112,184,0.1)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_70px_rgba(168,85,247,0.3)]">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
+        <div className="relative z-10">
+          <div className="w-14 h-14 bg-purple-600/20 border border-purple-500/30 rounded-2xl flex items-center justify-center text-purple-400 mb-6 text-2xl shadow-inner">
+            📊
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-3">تقارير PDF تلقائية</h3>
+          <p className="text-slate-400 leading-relaxed">
+            إنشاء تقارير مفصلة واحترافية للطلاب والدرجات بصيغة PDF وتصديرها بضغطة زر واحدة.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
 }
