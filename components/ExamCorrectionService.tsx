@@ -11,6 +11,9 @@ export default function ExamCorrectionService() {
     import('@google/model-viewer');
   }, []);
 
+  // Cast tag name as any to satisfy TypeScript completely
+  const ModelViewerTag = 'model-viewer' as any;
+
   return (
     <div className="max-w-4xl mx-auto my-8 bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300">
       {/* Clickable Header */}
@@ -49,15 +52,14 @@ export default function ExamCorrectionService() {
           {/* 3D GLB Model Viewer */}
           <div className="w-full h-72 bg-slate-900/80 rounded-2xl border border-slate-800 overflow-hidden relative shadow-inner flex items-center justify-center">
             {isClient ? (
-              // @ts-ignore
-              <model-viewer
+              <ModelViewerTag
                 src="/exam-model.glb"
                 alt="تصحيح الأوراق ثلاثي الأبعاد"
                 auto-rotate
                 camera-controls
                 ar
                 style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
-              ></model-viewer>
+              />
             ) : (
               <p className="text-slate-500 text-sm">جاري تحميل العرض ثلاثي الأبعاد...</p>
             )}
