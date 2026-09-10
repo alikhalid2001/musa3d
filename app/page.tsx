@@ -1,24 +1,48 @@
 'use client';
 
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Float, Center, useGLTF } from '@react-three/drei';
+import { OrbitControls, Float, Center, useGLTF, Html } from '@react-three/drei';
 import { motion, useScroll } from 'framer-motion';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, Suspense } from 'react';
 import * as THREE from 'three';
 
-// 3D Logo Component with smooth scroll-driven scaling and continuous rolling rotation
+// Instant loading spinner fallback for the 3D model
+function LogoLoader() {
+  return (
+    <Html center>
+      <div className="flex flex-col items-center justify-center gap-2">
+        <div className="w-8 h-8 border-2 border-teal-400 border-t-transparent rounded-full animate-spin"></div>
+        <span className="text-[10px] text-teal-300 tracking-wider">جاري التحميل...</span>
+      </div>
+    </Html>
+  );
+}
+
+// 3D Logo Component with enlarged scaling
 function CentralLogo({ scrollProgress }: { scrollProgress: any }) {
   const { scene } = useGLTF('/logo.glb');
   const groupRef = useRef<THREE.Group>(null);
 
+  useEffect(() => {
+    if (scene) {
+      scene.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+          const mesh = child as THREE.Mesh;
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+          if (mesh.material) {
+            (mesh.material as THREE.Material).side = THREE.DoubleSide;
+          }
+        }
+      });
+    }
+  }, [scene]);
+
   useFrame((state, delta) => {
     if (groupRef.current) {
-      // 1. Smooth scroll-driven scaling
       const currentProgress = scrollProgress.get();
-      const targetScale = 1.2 + currentProgress * 2.3;
+      const targetScale = 2.2 + currentProgress * 3.5;
       groupRef.current.scale.set(targetScale, targetScale, targetScale);
-
-      // 2. Continuous rolling around its Y-axis
       groupRef.current.rotation.y += delta * 0.8;
     }
   });
@@ -55,37 +79,23 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full bg-[#070e0e] text-[#E8E4D9] font-sans overflow-x-hidden">
+    <div className="w-full bg-[#070e0e] text-[#E8E4D9] font-sans overflow-x-hidden overflow-y-auto min-h-screen">
       
       {/* ================= HERO SECTION ================= */}
-      <section ref={containerRef} className="relative w-full h-screen overflow-hidden">
+      <section ref={containerRef} className="relative w-full min-h-screen pb-16 flex flex-col justify-between">
         
-        {/* 1. Background 3D Canvas */}
-        <div className="absolute inset-0 z-0">
-          <Canvas camera={{ position: [0, 0, 7], fov: 45 }}>
-            <ambientLight intensity={2.5} />
-            <directionalLight position={[10, 20, 10]} intensity={4} />
-            <directionalLight position={[-10, -10, -5]} intensity={1.5} color="#2dd4bf" />
-            <pointLight position={[0, 5, 5]} intensity={3} />
-            
-            <CentralLogo scrollProgress={scrollYProgress} />
-            
-            <OrbitControls enableZoom={false} enablePan={false} rotateSpeed={0.3} maxPolarAngle={Math.PI / 2 - 0.05} />
-          </Canvas>
-        </div>
-
-        {/* 2. Grid Pattern Overlay */}
+        {/* Grid Pattern Overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#112222_1px,transparent_1px),linear-gradient(to_bottom,#112222_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20 pointer-events-none z-0" />
 
-        {/* 3. Floating Hero UI Cards */}
-        <div className="relative z-10 w-full h-full px-6 md:px-12 flex items-start justify-between pointer-events-none pt-12 md:pt-16">
+        {/* Hero Content Layout */}
+        <div className="relative z-10 w-full px-4 sm:px-6 md:px-12 flex flex-col lg:flex-row items-center justify-between gap-6 pt-10 lg:pt-0 my-auto">
           
           {/* Left Hero Card */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="pointer-events-auto w-[320px] lg:w-[360px] p-6 rounded-3xl backdrop-blur-xl bg-[#112222]/70 border border-white/15 shadow-2xl space-y-5 -translate-y-2 md:-translate-y-4"
+            className="pointer-events-auto w-full max-w-[340px] lg:max-w-[360px] p-6 rounded-3xl backdrop-blur-xl bg-[#112222]/90 border border-white/15 shadow-2xl space-y-5 order-1 lg:order-1"
           >
             <div className="space-y-2 text-right">
               <h1 className="text-2xl font-black tracking-tight text-[#E8E4D9] leading-snug">
@@ -113,15 +123,31 @@ export default function Home() {
             </div>
           </motion.div>
 
+          {/* 3D Canvas Container */}
+          <div className="w-full h-[340px] sm:h-[400px] lg:h-[500px] lg:flex-1 pointer-events-none order-2 lg:order-2">
+            <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+              <ambientLight intensity={3.0} />
+              <directionalLight position={[10, 20, 10]} intensity={5} />
+              <directionalLight position={[-10, -10, -5]} intensity={2.5} color="#2dd4bf" />
+              <pointLight position={[0, 5, 5]} intensity={4} />
+              
+              <Suspense fallback={<LogoLoader />}>
+                <CentralLogo scrollProgress={scrollYProgress} />
+              </Suspense>
+              
+              <OrbitControls enableZoom={false} enablePan={false} rotateSpeed={0.3} maxPolarAngle={Math.PI / 2 - 0.05} />
+            </Canvas>
+          </div>
+
           {/* Right Hero Cards (Download App Section) */}
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="pointer-events-auto flex flex-col gap-4 w-[280px] lg:w-[300px] -translate-y-2 md:-translate-y-4"
+            className="pointer-events-auto flex flex-col gap-4 w-full max-w-[340px] lg:max-w-[360px] order-3 lg:order-3"
           >
             {/* Main Download Card Header */}
-            <div className="p-5 rounded-3xl backdrop-blur-xl bg-[#112222]/70 border border-white/15 shadow-2xl space-y-4">
+            <div className="p-5 rounded-3xl backdrop-blur-xl bg-[#112222]/90 border border-white/15 shadow-2xl space-y-4">
               <div className="flex items-center justify-between text-right">
                 <div className="space-y-0.5">
                   <h3 className="text-sm font-black text-[#E8E4D9]">تحميل التطبيق</h3>
@@ -157,7 +183,7 @@ export default function Home() {
             </div>
 
             {/* Quick Status Sub-card */}
-            <div className="p-4 rounded-3xl backdrop-blur-xl bg-[#112222]/70 border border-white/15 shadow-2xl flex items-center gap-3">
+            <div className="p-4 rounded-3xl backdrop-blur-xl bg-[#112222]/90 border border-white/15 shadow-2xl flex items-center gap-3">
               <div className="w-9 h-9 rounded-2xl bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-teal-300 font-black text-xs">
                 v2.6
               </div>
@@ -172,7 +198,7 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator Arrow */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 z-10 pointer-events-none opacity-60 animate-bounce">
+        <div className="relative mt-8 mx-auto flex flex-col items-center gap-2 z-10 pointer-events-none opacity-60 animate-bounce">
           <span className="text-[10px] tracking-widest text-teal-300">SCROLL</span>
           <svg className="w-4 h-4 text-teal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -392,9 +418,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= SECTION 2: STATS ================= */}
+      {/* ================= SECTION 2: STATS (Updated to 3 columns) ================= */}
       <section className="relative z-20 py-20 bg-[#0a1515] border-y border-white/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
           
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
@@ -423,17 +449,6 @@ export default function Home() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: false, amount: 0.5 }}
             transition={{ duration: 0.4, delay: 0.3 }}
-            className="space-y-2"
-          >
-            <h4 className="text-4xl font-black text-teal-400">+50</h4>
-            <p className="text-xs text-gray-400">مؤسسة تعليمية</p>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false, amount: 0.5 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
             className="space-y-2"
           >
             <h4 className="text-4xl font-black text-[#E8E4D9]">24/7</h4>
