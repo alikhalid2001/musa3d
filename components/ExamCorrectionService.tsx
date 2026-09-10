@@ -1,74 +1,50 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 export default function ExamCorrectionService() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-    // Dynamically load model-viewer only in the browser
-    import('@google/model-viewer').catch(() => {});
-  }, []);
-
-  // Use any cast to prevent TypeScript from complaining about custom web components
-  const ModelViewerTag = 'model-viewer' as any;
 
   return (
-    <div className="max-w-4xl mx-auto my-8 bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300">
+    <div className="max-w-4xl mx-auto my-8 bg-[#112222]/90 border border-white/15 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300">
       {/* Clickable Header */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-6 text-right bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 hover:bg-slate-800/80 transition-colors"
+        className="w-full flex items-center justify-between p-6 text-right bg-gradient-to-r from-[#112222] via-[#0e1b1b] to-[#112222] hover:bg-white/5 transition-colors cursor-pointer"
       >
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-blue-600/20 border border-blue-500/30 rounded-2xl flex items-center justify-center text-blue-400 text-xl shadow-inner">
+          <div className="w-12 h-12 bg-teal-500/10 border border-teal-500/30 rounded-2xl flex items-center justify-center text-teal-300 text-xl shadow-inner">
             📝
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-white">خدمات مؤسسة مساعد التعليمية</h3>
-            <p className="text-slate-400 text-sm mt-1">تصحيح الأوراق الامتحانية</p>
+            <h3 className="text-2xl font-bold text-[#E8E4D9]">خدمات مؤسسة مساعد التعليمية</h3>
+            <p className="text-teal-400 text-sm mt-1">تصحيح الأوراق الامتحانية</p>
           </div>
         </div>
-        <span className={`text-slate-400 text-2xl transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+        <span className={`text-teal-400 text-xl transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
           ▼
         </span>
       </button>
 
-      {/* Dropdown Content with 3D Model & Description */}
+      {/* Dropdown Content */}
       {isOpen && (
-        <div className="p-8 border-t border-slate-800 bg-slate-950/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Professional Description */}
+        <p-8 className="p-8 border-t border-white/10 bg-[#070e0e]/50 grid grid-cols-1 md:grid-cols-2 gap-8 items-center block">
           <div className="space-y-4 text-right">
-            <h4 className="text-xl font-semibold text-blue-400">آلية التصحيح الآمن والمضمون</h4>
-            <p className="text-slate-300 leading-relaxed text-lg">
-              تتم عملية تصحيح الأوراق الامتحانية بدقة وسرعة عاليتين في مكان مخصص ومحفوظ حيث تكون ورقة الطالب مؤمنة.
+            <h4 className="text-xl font-semibold text-teal-300">آلية التصحيح الآمن والمضمون</h4>
+            <p className="text-gray-300 leading-relaxed text-sm">
+              تتم عملية تصحيح الأوراق الامتحانية بدقة وسرعة عاليتين في مكان مخصص ومحفوظ حيث تكون ورقة الطالب مؤمنة بالكامل وفق أعلى معايير الجودة.
             </p>
-            <div className="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-xl text-blue-300 text-sm font-medium">
+            <div className="inline-block px-4 py-2 bg-teal-500/10 border border-teal-500/20 rounded-xl text-teal-300 text-xs font-medium">
               ✨ معتمدة لدى مؤسسة المساعد التعليمية
             </div>
           </div>
 
-          {/* 3D GLB Model Viewer */}
-          <div className="w-full h-72 bg-slate-900/80 rounded-2xl border border-slate-800 overflow-hidden relative shadow-inner flex items-center justify-center">
-            {isClient ? (
-              <ModelViewerTag
-                src="/exam-model.glb"
-                alt="تصحيح الأوراق ثلاثي الأبعاد"
-                auto-rotate
-                camera-controls
-                ar
-                style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
-              />
-            ) : (
-              <p className="text-slate-500 text-sm">جاري تحميل العرض ثلاثي الأبعاد...</p>
-            )}
-            <span className="absolute bottom-3 right-3 text-xs text-slate-500 bg-slate-900/80 px-2 py-1 rounded-md border border-slate-800 z-10">
-              اسحب للتدوير 3D 🖱️
-            </span>
+          <div className="w-full h-56 bg-[#070e0e] rounded-2xl border border-white/10 flex flex-col items-center justify-center p-6 text-center space-y-3">
+            <div className="text-4xl">🔒</div>
+            <div className="text-sm font-bold text-[#E8E4D9]">حماية عالية لبيانات الطلاب</div>
+            <p className="text-xs text-gray-400">توثيق فوري للدرجات واستخراج تقارير دقيقة بضغطة زر واحدة.</p>
           </div>
-        </div>
+        </p-8>
       )}
     </div>
   );
