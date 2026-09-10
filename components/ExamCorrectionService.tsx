@@ -8,10 +8,11 @@ export default function ExamCorrectionService() {
 
   useEffect(() => {
     setIsClient(true);
-    import('@google/model-viewer');
+    // Dynamically load model-viewer only in the browser
+    import('@google/model-viewer').catch(() => {});
   }, []);
 
-  // Cast tag name as any to satisfy TypeScript completely
+  // Use any cast to prevent TypeScript from complaining about custom web components
   const ModelViewerTag = 'model-viewer' as any;
 
   return (

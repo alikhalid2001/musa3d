@@ -5,6 +5,7 @@ import { OrbitControls, Float, Center, useGLTF, Html } from '@react-three/drei';
 import { motion, useScroll } from 'framer-motion';
 import React, { useRef, useEffect, Suspense } from 'react';
 import * as THREE from 'three';
+import ExamCorrectionService from '@/components/ExamCorrectionService';
 
 // Instant loading spinner fallback for the 3D model
 function LogoLoader() {
@@ -59,7 +60,7 @@ function CentralLogo({ scrollProgress }: { scrollProgress: any }) {
 }
 
 useGLTF.preload('/logo.glb');
-import ExamCorrectionService from '@/components/ExamCorrectionService';
+
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
@@ -78,20 +79,7 @@ export default function Home() {
     instructorsRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return (export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-950 py-12 px-4">
-      <div className="max-w-5xl mx-auto">
-        {/* Header / Title */}
-        <h1 className="text-4xl font-bold text-center text-white mb-8">مؤسسة المساعد التعليمية</h1>
-
-        {/* Your 3D Interactive Dropdown Service */}
-        <ExamCorrectionService />
-
-      </div>
-    </main>
-  );
-}
     <div className="w-full bg-[#070e0e] text-[#E8E4D9] font-sans overflow-x-hidden overflow-y-auto min-h-screen">
       
       {/* ================= HERO SECTION ================= */}
@@ -217,6 +205,11 @@ export default function Home() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
+      </section>
+
+      {/* ================= INTERACTIVE EXAM CORRECTION SERVICE (Dropdown + 3D) ================= */}
+      <section className="py-12 px-6 max-w-5xl mx-auto">
+        <ExamCorrectionService />
       </section>
 
       {/* ================= SECTION 1: SERVICES ================= */}
@@ -431,7 +424,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= SECTION 2: STATS (Updated to 3 columns) ================= */}
+      {/* ================= SECTION 2: STATS ================= */}
       <section className="relative z-20 py-20 bg-[#0a1515] border-y border-white/10">
         <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
           
@@ -477,37 +470,5 @@ export default function Home() {
       </footer>
 
     </div>
-  );
-}export default function Features3D() {
-  return (
-    <section className="py-20 px-6 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
-      {/* Feature 1: تصحيح الأوراق */}
-      <div className="group relative bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-3xl border border-slate-700 shadow-[0_20px_50px_rgba(8,112,184,0.1)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_70px_rgba(59,130,246,0.3)]">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
-        <div className="relative z-10">
-          <div className="w-14 h-14 bg-blue-600/20 border border-blue-500/30 rounded-2xl flex items-center justify-center text-blue-400 mb-6 text-2xl shadow-inner">
-            📝
-          </div>
-          <h3 className="text-2xl font-bold text-white mb-3">تصحيح الأوراق الذكي</h3>
-          <p className="text-slate-400 leading-relaxed">
-            نظام متقدم لتصحيح أوراق الامتحانات بدقة وسرعة عالية، مع رصد الدرجات واستخراج النتائج فورياً.
-          </p>
-        </div>
-      </div>
-
-      {/* Feature 2: تقارير PDF تلقائية */}
-      <div className="group relative bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-3xl border border-slate-700 shadow-[0_20px_50px_rgba(8,112,184,0.1)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_70px_rgba(168,85,247,0.3)]">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
-        <div className="relative z-10">
-          <div className="w-14 h-14 bg-purple-600/20 border border-purple-500/30 rounded-2xl flex items-center justify-center text-purple-400 mb-6 text-2xl shadow-inner">
-            📊
-          </div>
-          <h3 className="text-2xl font-bold text-white mb-3">تقارير PDF تلقائية</h3>
-          <p className="text-slate-400 leading-relaxed">
-            إنشاء تقارير مفصلة واحترافية للطلاب والدرجات بصيغة PDF وتصديرها بضغطة زر واحدة.
-          </p>
-        </div>
-      </div>
-    </section>
   );
 }
