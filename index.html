@@ -539,38 +539,263 @@
       .app-cinematic-wrap{min-height:100vh}.draw-board{width:82vw;border-radius:28px}.drawing-pen{width:32px;height:155px}.pen-body{width:20px;height:124px}.pen-nib{top:119px;width:20px;height:34px}.pen-clip{height:60px}.floating-paper{width:105px;height:140px;padding:15px 12px;border-radius:14px}.floating-paper i{margin:10px 0;height:3px}.floating-paper b{font-size:19px}.fp-1{left:-3%;top:18%}.fp-2{right:-4%;top:17%}.fp-3{right:3%;bottom:17%}.app-cinema-copy{bottom:2vh}.app-giant-word{font-size:31vw;letter-spacing:-7px}.board-stamp{left:50%;right:auto;bottom:-38px;font-size:9px;padding:6px 9px}
     }
 
-    /* Mobile performance mode for the educators cinematic.
-       Keep the visual identity, but let the browser use native scrolling. */
+    /* Mobile educators cinematic — native sticky + one lightweight scrub timeline.
+       This keeps the animation alive without GSAP pinning or expensive 3D work. */
     @media(max-width:850px){
-      .teachers-cinematic-wrap{min-height:auto}
+      .teachers-cinematic-wrap{
+        min-height:165svh;
+        position:relative;
+      }
       .teachers-cinematic-stage{
+        position:sticky;
+        top:0;
         height:100svh;
-        min-height:620px;
-        max-height:820px;
+        min-height:0;
+        max-height:none;
         perspective:none;
-        contain:paint;
+        contain:layout paint;
+        overflow:hidden;
       }
       .teachers-beam,.educators-giant,.academy-axis{display:none!important}
-      .teachers-stars{opacity:.24;will-change:auto!important}
+      .teachers-stars{opacity:.22;will-change:transform,opacity!important}
       .academy-orbit{
         width:min(92vw,520px);
         transform-style:flat!important;
-        will-change:auto!important;
+        will-change:transform,opacity!important;
       }
       .academy-core{
         transform-style:flat!important;
-        will-change:auto!important;
-        box-shadow:0 0 0 10px rgba(255,255,255,.01),0 0 42px rgba(76,164,151,.12);
+        will-change:transform!important;
+        box-shadow:0 0 0 10px rgba(255,255,255,.01),0 0 38px rgba(76,164,151,.10);
       }
       .academy-ring{
         box-shadow:none!important;
-        will-change:auto!important;
+        will-change:transform!important;
       }
       .subject-orb{
-        will-change:auto!important;
-        box-shadow:0 10px 24px rgba(0,0,0,.20);
+        will-change:transform,opacity!important;
+        box-shadow:0 8px 18px rgba(0,0,0,.18);
       }
-      .teachers-cinema-caption{will-change:auto!important}
+      .teachers-cinema-caption{will-change:transform,opacity!important}
+    }
+
+
+
+    /* =========================================================
+       ELITE CINEMA — INTEGRATED FULL-BLEED AIRCRAFT SCENE
+       Only the elite-teachers cinematic scene is changed.
+       The aircraft photo now fills the scene itself, with no card/frame,
+       no stretching, and a denser source image for sharper rendering.
+    ========================================================= */
+    .plane-cinema{
+      position:relative;
+      width:100vw!important;
+      height:100vh;
+      aspect-ratio:auto!important;
+      display:grid;
+      place-items:center;
+      isolation:isolate;
+      overflow:hidden;
+      transform-style:preserve-3d;
+      background:
+        radial-gradient(circle at 18% 56%,rgba(222,167,95,.16),transparent 26%),
+        radial-gradient(circle at 82% 28%,rgba(69,124,126,.14),transparent 30%),
+        linear-gradient(180deg,#071613 0%,#081b18 55%,#061411 100%);
+    }
+
+    .plane-cinema .academy-ring{
+      pointer-events:none;
+      opacity:.08;
+      box-shadow:none;
+      z-index:4;
+    }
+    .plane-cinema .ring-a{inset:7%;border-color:rgba(199,169,108,.16)}
+    .plane-cinema .ring-b{inset:18%;border-color:rgba(90,169,157,.13)}
+    .plane-cinema .ring-c{inset:31%;border-color:rgba(242,234,217,.06)}
+
+    /* The image is the scene background itself — not a framed image. */
+    .real-plane-shot{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      overflow:hidden;
+      border:0;
+      border-radius:0;
+      box-shadow:none;
+      background:transparent;
+      transform-origin:center center;
+      will-change:transform,opacity;
+      backface-visibility:hidden;
+    }
+
+    .real-plane-photo{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center 54%;
+      display:block;
+      border:0;
+      border-radius:0!important;
+      filter:saturate(.98) contrast(1.05) brightness(.82);
+      transform:scale(1.005);
+      image-rendering:auto;
+      backface-visibility:hidden;
+      will-change:transform,filter;
+    }
+
+    /* Dark/teal cinema grading blended across the entire viewport,
+       so the photograph has no visible rectangular edge. */
+    .real-plane-shot::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:2;
+      pointer-events:none;
+      background:
+        linear-gradient(180deg,rgba(2,12,10,.42) 0%,rgba(2,12,10,.08) 20%,rgba(2,12,10,.03) 49%,rgba(2,12,10,.23) 75%,rgba(2,12,10,.78) 100%),
+        linear-gradient(90deg,rgba(2,12,10,.44),transparent 18%,transparent 82%,rgba(2,12,10,.44));
+    }
+
+    .real-plane-shot::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:3;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 55%,rgba(239,185,105,.14),transparent 22%),
+        radial-gradient(circle at 50% 52%,transparent 40%,rgba(2,12,10,.10) 72%,rgba(2,12,10,.32) 100%);
+    }
+
+    /* Extra cloud depth is generated as part of the website, not baked into a card. */
+    .cloud-haze{
+      position:absolute;
+      pointer-events:none;
+      z-index:7;
+      opacity:.28;
+      filter:blur(20px);
+      mix-blend-mode:screen;
+    }
+    .cloud-haze-a{left:-14%;bottom:-4%;width:58%;height:28%;background:radial-gradient(ellipse at center,rgba(245,235,218,.34),rgba(245,235,218,.10) 45%,transparent 72%)}
+    .cloud-haze-b{right:-14%;bottom:-3%;width:60%;height:30%;background:radial-gradient(ellipse at center,rgba(242,232,216,.31),rgba(242,232,216,.08) 48%,transparent 74%)}
+    .cloud-haze-c{left:28%;top:-5%;width:44%;height:19%;background:radial-gradient(ellipse at center,rgba(243,226,201,.11),transparent 72%);filter:blur(24px)}
+
+    .real-plane-sweep{
+      position:absolute;
+      z-index:8;
+      left:8%;right:8%;top:51%;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(199,169,108,.10),rgba(242,234,217,.22),rgba(199,169,108,.10),transparent);
+      opacity:.24;
+    }
+
+    /* Crisp real logo placed as HTML over the fuselage, so it stays sharp. */
+    .plane-brand-mark{
+      position:absolute;
+      z-index:12;
+      left:45.1%;
+      top:55.0%;
+      width:9.4%;
+      aspect-ratio:1;
+      transform:translate(-50%,-50%) rotate(-2deg);
+      display:grid;
+      place-items:center;
+      filter:drop-shadow(0 5px 10px rgba(0,0,0,.36));
+      opacity:0;
+      will-change:transform,opacity;
+    }
+    .plane-brand-mark img{
+      width:100%;height:100%;
+      object-fit:contain;
+      border-radius:0!important;
+      display:block;
+    }
+
+    /* Names remain DOM elements above the aircraft/clouds, so they never become blurry. */
+    .plane-name{
+      position:absolute;
+      z-index:40;
+      min-width:158px;
+      display:flex;
+      align-items:center;
+      gap:9px;
+      padding:11px 16px;
+      border-radius:16px;
+      border:1px solid rgba(199,169,108,.36);
+      background:linear-gradient(145deg,rgba(6,34,30,.95),rgba(2,15,13,.97));
+      box-shadow:0 18px 48px rgba(0,0,0,.42),0 0 24px rgba(199,169,108,.05);
+      color:#f3ead8;
+      font-size:13px;
+      font-weight:900;
+      opacity:0;
+      will-change:transform,opacity;
+      backdrop-filter:none!important;
+    }
+    .plane-name i{
+      display:block;
+      flex:0 0 auto;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--gold);
+      box-shadow:0 0 15px rgba(199,169,108,.82)
+    }
+    .plane-name::after{
+      content:"";
+      position:absolute;
+      height:1px;
+      width:92px;
+      background:linear-gradient(90deg,rgba(199,169,108,.92),rgba(242,234,217,.35),transparent);
+      opacity:.88;
+      filter:drop-shadow(0 0 5px rgba(199,169,108,.30));
+    }
+    .name-1{right:7%;top:20%}.name-1::after{right:100%;top:50%;transform:rotate(12deg);transform-origin:right center}
+    .name-2{right:8%;bottom:22%}.name-2::after{right:100%;top:46%;transform:rotate(-14deg);transform-origin:right center}
+    .name-3{left:8%;bottom:21%}.name-3::after{left:100%;top:46%;transform:rotate(194deg);transform-origin:left center}
+    .name-4{left:7%;top:22%}.name-4::after{left:100%;top:50%;transform:rotate(166deg);transform-origin:left center}
+    .name-5{left:50%;top:10.5%;transform:translateX(-50%)}.name-5::after{left:50%;top:100%;width:70px;transform:rotate(90deg);transform-origin:left center}
+
+    .teachers-cinema-caption{
+      z-index:45!important;
+      bottom:5.5vh!important;
+      text-shadow:0 10px 28px rgba(0,0,0,.50);
+    }
+
+    @media(max-width:850px){
+      .plane-cinema{
+        width:100vw!important;
+        height:100svh!important;
+        transform-style:flat!important;
+      }
+      .plane-cinema .academy-ring{opacity:.05!important}
+      .real-plane-shot{inset:0}
+      .real-plane-photo{
+        object-fit:cover;
+        object-position:50% 52%;
+        filter:saturate(.97) contrast(1.04) brightness(.80);
+        transform:scale(1.01);
+      }
+      .plane-brand-mark{left:45.5%;top:54.8%;width:11.2%}
+      .cloud-haze{opacity:.18;filter:blur(14px)}
+      .cloud-haze-c{display:none}
+      .plane-name{
+        min-width:104px;
+        padding:8px 10px;
+        border-radius:12px;
+        font-size:10.5px;
+        gap:7px;
+        box-shadow:0 10px 25px rgba(0,0,0,.38);
+      }
+      .plane-name i{width:6px;height:6px}
+      .plane-name::after{width:38px}
+      .name-1{right:3%;top:19%}
+      .name-2{right:3%;bottom:24%}
+      .name-3{left:3%;bottom:22%}
+      .name-4{left:3%;top:22%}
+      .name-5{top:10%}
+      .name-5::after{width:32px}
+      .teachers-cinema-caption{bottom:5svh!important}
     }
 
     /* =========================================================
@@ -763,24 +988,26 @@
           <div class="teachers-beam beam-b"></div>
           <div class="educators-giant">EDUCATORS</div>
 
-          <div class="academy-orbit" id="academyOrbit">
+          <div class="academy-orbit plane-cinema" id="academyOrbit">
             <span class="academy-ring ring-a"></span>
             <span class="academy-ring ring-b"></span>
             <span class="academy-ring ring-c"></span>
-            <span class="academy-axis axis-a"></span>
-            <span class="academy-axis axis-b"></span>
 
-            <div class="academy-core" id="academyCore">
-              <small>ELITE EDUCATOR</small>
-              <strong>نخبة</strong>
-              <span>من الخبرات التعليمية</span>
+            <div class="real-plane-sweep" aria-hidden="true"></div>
+            <div class="cloud-haze cloud-haze-a" aria-hidden="true"></div>
+            <div class="cloud-haze cloud-haze-b" aria-hidden="true"></div>
+            <div class="cloud-haze cloud-haze-c" aria-hidden="true"></div>
+
+            <div class="real-plane-shot" id="realPlaneShot" aria-label="طائرة حقيقية تحمل شعار مساعد وسط الغيوم">
+              <img class="real-plane-photo" id="realPlanePhoto" src="plane-scene-hq.webp" alt="طائرة حقيقية تحلق فوق الغيوم">
+              <span class="plane-brand-mark" id="planeBrandMark"><img src="logo.png" alt="شعار مساعد"></span>
             </div>
 
-            <span class="subject-orb orb-1"><b>π</b><em>قصي العميري</em></span>
-            <span class="subject-orb orb-2"><b>⚗</b><em>أحمد النداوي</em></span>
-            <span class="subject-orb orb-3"><b>⚡</b><em>معتز الوادي</em></span>
-            <span class="subject-orb orb-4"><b>Φ</b><em>حسين الصالحي</em></span>
-            <span class="subject-orb orb-5"><b>⌖</b><em>دلير الخالدي</em></span>
+            <div class="plane-name name-1"><i></i><span>قصي العميري</span></div>
+            <div class="plane-name name-2"><i></i><span>أحمد النداوي</span></div>
+            <div class="plane-name name-3"><i></i><span>معتز الوادي</span></div>
+            <div class="plane-name name-4"><i></i><span>حسين الصالحي</span></div>
+            <div class="plane-name name-5"><i></i><span>دلير الخالدي</span></div>
           </div>
 
           <div class="teachers-cinema-caption" id="teachersCinemaCaption">
@@ -1080,22 +1307,27 @@
 
 
     /* =====================================================
-       CINEMATIC TEACHERS — ACADEMY ORBIT
-       Desktop keeps the full pinned 3D scene.
-       Mobile uses a lightweight one-time reveal with NO pin,
-       so native scrolling stays smooth.
+       CINEMATIC TEACHERS — FULL-BLEED AIRCRAFT FILM SCENE
+       Desktop uses a pinned reveal. Mobile keeps native sticky scrolling.
     ===================================================== */
     if (window.gsap && window.ScrollTrigger && !reducedMotion) {
       const teacherMedia = gsap.matchMedia();
 
       teacherMedia.add("(min-width: 851px)", () => {
-        const teacherPinDistance = () => Math.round(window.innerHeight * 2.25);
+        gsap.set('#realPlaneShot',{x:150,y:40,scale:1.04,rotation:-.5,opacity:0});
+        gsap.set('#realPlanePhoto',{scale:1.025,x:14,y:4,filter:'saturate(.95) contrast(1.06) brightness(.72)'});
+        gsap.set('#planeBrandMark',{opacity:0,scale:.34,rotation:-9});
+        gsap.set('.plane-name',{opacity:0,scale:.68});
+        gsap.set('#teachersCinemaCaption',{opacity:0,y:40});
+        gsap.set('.plane-cinema .academy-ring',{opacity:.02,scale:.82});
+        gsap.set('.cloud-haze',{opacity:0});
+
         const teacherTl = gsap.timeline({
           scrollTrigger:{
             trigger:'#teachersCinemaStage',
             start:'top top',
-            end:()=>`+=${teacherPinDistance()}`,
-            scrub:.42,
+            end:()=>`+=${Math.round(window.innerHeight * 2.35)}`,
+            scrub:.34,
             pin:true,
             pinSpacing:true,
             anticipatePin:1,
@@ -1104,77 +1336,87 @@
         });
 
         teacherTl
-          .fromTo('#academyOrbit',{scale:.42,z:-520,rotateX:28,rotateZ:-18,opacity:0},{scale:1,z:0,rotateX:0,rotateZ:0,opacity:1,duration:.26,ease:'power3.out'})
-          .fromTo('.subject-orb',{scale:.25,opacity:0,z:-220},{scale:1,opacity:1,z:0,stagger:.025,duration:.16,ease:'back.out(1.7)'},.10)
-          .fromTo('.educators-giant',{scale:.62,opacity:.05},{scale:1.06,opacity:.55,duration:.30},.12)
-          .to('.academy-ring.ring-a',{rotateZ:160,rotateX:70,duration:.46,ease:'none'},.20)
-          .to('.academy-ring.ring-b',{rotateZ:-210,rotateY:72,duration:.46,ease:'none'},.20)
-          .to('.academy-ring.ring-c',{rotateZ:245,rotateX:80,duration:.46,ease:'none'},.20)
-          .to('.subject-orb.orb-1',{x:80,y:80,scale:1.1,duration:.27},.35)
-          .to('.subject-orb.orb-2',{x:-95,y:65,scale:1.05,duration:.27},.35)
-          .to('.subject-orb.orb-3',{x:-85,y:-85,scale:1.08,duration:.27},.35)
-          .to('.subject-orb.orb-4',{x:85,y:-85,scale:1.08,duration:.27},.35)
-          .to('.subject-orb.orb-5',{x:95,y:65,scale:1.05,duration:.27},.35)
-          .to('#academyCore',{scale:1.24,rotateY:10,z:120,duration:.28,ease:'power2.inOut'},.42)
-          .fromTo('#teachersCinemaCaption',{opacity:0,y:45},{opacity:1,y:0,duration:.22,ease:'power3.out'},.50)
-          .to('#academyOrbit',{scale:2.1,z:430,rotateZ:25,opacity:0,duration:.28,ease:'power3.in'},.70)
-          .to('.educators-giant',{scale:1.28,opacity:0,duration:.22},.73)
-          .to('#teachersCinemaCaption',{opacity:0,y:-35,duration:.16},.78);
+          .to('.teachers-stars',{x:22,y:-15,duration:1,ease:'none'},0)
+          .to('.beam-a',{x:-95,rotate:20,duration:1,ease:'none'},0)
+          .to('.beam-b',{x:105,rotate:-18,duration:1,ease:'none'},0)
+          .to('#realPlaneShot',{x:0,y:0,scale:1,rotation:0,opacity:1,duration:.28,ease:'power3.out'},.02)
+          .to('#realPlanePhoto',{scale:1.005,x:0,y:0,filter:'saturate(.98) contrast(1.05) brightness(.82)',duration:.36,ease:'power2.out'},.02)
+          .to('.cloud-haze',{opacity:.42,duration:.20,stagger:.02},.05)
+          .to('.plane-cinema .academy-ring',{opacity:.10,scale:1,duration:.25,stagger:.018,ease:'power2.out'},.07)
+          .fromTo('#planeBrandMark',{opacity:0,scale:.34,rotation:-9},{opacity:1,scale:1,rotation:-2,duration:.15,ease:'back.out(1.8)'},.22)
+          .to('.plane-cinema .ring-a',{rotation:48,duration:.58,ease:'none'},.18)
+          .to('.plane-cinema .ring-b',{rotation:-74,duration:.58,ease:'none'},.18)
+          .to('.plane-cinema .ring-c',{rotation:96,duration:.58,ease:'none'},.18)
 
-        teacherTl
-          .to('.teachers-stars',{x:28,y:-18,duration:1,ease:'none'},0)
-          .to('.beam-a',{x:-110,rotate:22,duration:1,ease:'none'},0)
-          .to('.beam-b',{x:120,rotate:-20,duration:1,ease:'none'},0);
+          .fromTo('.name-1',{x:110,y:30,opacity:0,scale:.68},{x:0,y:0,opacity:1,scale:1,duration:.12,ease:'back.out(1.45)'},.33)
+          .fromTo('.name-2',{x:116,y:-24,opacity:0,scale:.68},{x:0,y:0,opacity:1,scale:1,duration:.12,ease:'back.out(1.45)'},.41)
+          .fromTo('.name-3',{x:-116,y:-22,opacity:0,scale:.68},{x:0,y:0,opacity:1,scale:1,duration:.12,ease:'back.out(1.45)'},.49)
+          .fromTo('.name-4',{x:-110,y:30,opacity:0,scale:.68},{x:0,y:0,opacity:1,scale:1,duration:.12,ease:'back.out(1.45)'},.57)
+          .fromTo('.name-5',{y:-58,opacity:0,scale:.68},{y:0,opacity:1,scale:1,duration:.12,ease:'back.out(1.45)'},.65)
+
+          .fromTo('#teachersCinemaCaption',{opacity:0,y:40},{opacity:1,y:0,duration:.18,ease:'power3.out'},.69)
+          .to('#realPlanePhoto',{scale:1.025,x:-8,y:-3,duration:.20,ease:'none'},.75)
+          .to('.plane-name',{y:'-=5',duration:.14,stagger:.007,ease:'sine.inOut'},.78)
+          .to('#academyOrbit',{scale:1.12,opacity:0,duration:.20,ease:'power3.in'},.89)
+          .to('#teachersCinemaCaption',{opacity:0,y:-24,duration:.12},.90);
 
         gsap.from('.teachers-grid .teacher-card',{
-          opacity:0,y:120,z:-180,rotateY:(i)=>i%2?12:-12,rotateX:8,scale:.90,stagger:.08,duration:.82,ease:'power3.out',
-          scrollTrigger:{trigger:'.teachers-grid',start:'top 84%',once:true}
+          opacity:0,y:88,z:-110,rotateY:(i)=>i%2?8:-8,scale:.94,
+          stagger:.07,duration:.70,ease:'power3.out',
+          scrollTrigger:{trigger:'.teachers-grid',start:'top 86%',once:true}
         });
+
+        return () => {
+          teacherTl.scrollTrigger?.kill();
+          teacherTl.kill();
+        };
       });
 
       teacherMedia.add("(max-width: 850px)", () => {
-        /* Important for iPhone/Android:
-           no pin, no scrub and no continuously changing 3D transforms. */
-        gsap.set(['#academyOrbit','.subject-orb','#academyCore','.academy-ring','.teachers-stars','.beam-a','.beam-b'],{
-          clearProps:'x,y,z,scale,rotation,rotationX,rotationY,rotationZ,opacity'
-        });
-        gsap.set('#teachersCinemaCaption',{opacity:0,y:24});
+        gsap.set('#realPlaneShot',{x:42,y:26,scale:1.035,rotation:-.4,opacity:.18});
+        gsap.set('#realPlanePhoto',{scale:1.025,x:8,y:2});
+        gsap.set('#planeBrandMark',{opacity:.08,scale:.70});
+        gsap.set('.plane-name',{opacity:0,scale:.80});
+        gsap.set('#teachersCinemaCaption',{opacity:0,y:20});
+        gsap.set('.plane-cinema .academy-ring',{opacity:.02,scale:.90});
+        gsap.set('.cloud-haze',{opacity:.08});
 
         const mobileTeacherTl = gsap.timeline({
+          defaults:{ease:'none'},
           scrollTrigger:{
-            trigger:'#teachersCinemaStage',
-            start:'top 72%',
-            once:true
+            trigger:'#teachersCinemaWrap',
+            start:'top top',
+            end:'bottom bottom',
+            scrub:.12,
+            invalidateOnRefresh:true
           }
         });
 
         mobileTeacherTl
-          .fromTo('#academyOrbit',
-            {opacity:0,scale:.88,y:34},
-            {opacity:1,scale:1,y:0,duration:.72,ease:'power2.out'}
-          )
-          .fromTo('.subject-orb',
-            {opacity:0},
-            {opacity:1,duration:.38,stagger:.045,ease:'power1.out'},
-            .16
-          )
-          .fromTo('#teachersCinemaCaption',
-            {opacity:0,y:24},
-            {opacity:1,y:0,duration:.48,ease:'power2.out'},
-            .34
-          );
+          .to('#realPlaneShot',{x:0,y:0,scale:1,rotation:0,opacity:1,duration:.26},0)
+          .to('#realPlanePhoto',{scale:1.01,x:0,y:0,duration:.28},0)
+          .to('.cloud-haze',{opacity:.24,duration:.16,stagger:.015},.04)
+          .to('.plane-cinema .academy-ring',{opacity:.06,scale:1,duration:.18,stagger:.014},.05)
+          .to('#planeBrandMark',{opacity:1,scale:1,duration:.12},.19)
+          .fromTo('.name-1',{x:34,y:8,opacity:0,scale:.80},{x:0,y:0,opacity:1,scale:1,duration:.085},.30)
+          .fromTo('.name-2',{x:34,y:-7,opacity:0,scale:.80},{x:0,y:0,opacity:1,scale:1,duration:.085},.39)
+          .fromTo('.name-3',{x:-34,y:-7,opacity:0,scale:.80},{x:0,y:0,opacity:1,scale:1,duration:.085},.48)
+          .fromTo('.name-4',{x:-34,y:8,opacity:0,scale:.80},{x:0,y:0,opacity:1,scale:1,duration:.085},.57)
+          .fromTo('.name-5',{y:-23,opacity:0,scale:.80},{y:0,opacity:1,scale:1,duration:.085},.66)
+          .to('#teachersCinemaCaption',{opacity:1,y:0,duration:.12},.74)
+          .to('#realPlanePhoto',{scale:1.025,x:-4,duration:.16},.80);
 
         gsap.from('.teachers-grid .teacher-card',{
-          opacity:0,y:52,stagger:.055,duration:.58,ease:'power2.out',
-          scrollTrigger:{trigger:'.teachers-grid',start:'top 88%',once:true}
+          opacity:0,y:42,stagger:.05,duration:.50,ease:'power2.out',
+          scrollTrigger:{trigger:'.teachers-grid',start:'top 90%',once:true}
         });
 
         return () => {
+          mobileTeacherTl.scrollTrigger?.kill();
           mobileTeacherTl.kill();
         };
       });
     }
-
 
     /* =====================================================
        CINEMATIC APP — THE PEN DRAWS THE ENTIRE REAL LOGO
