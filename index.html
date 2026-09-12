@@ -827,7 +827,173 @@
     }
 
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-  </style>
+  
+
+    /* ===== Premium teacher portrait cards ===== */
+    .teachers-grid{gap:20px}
+    .teacher-card{
+      min-height:535px;
+      padding:24px 24px 26px;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      isolation:isolate;
+      border:1px solid rgba(199,169,108,.16);
+      background:
+        radial-gradient(circle at 50% 12%,rgba(90,169,157,.16),transparent 34%),
+        linear-gradient(160deg,rgba(25,63,56,.82),rgba(5,21,18,.96));
+      box-shadow:0 24px 70px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.03);
+    }
+    .teacher-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:-1;
+      background:
+        linear-gradient(115deg,transparent 0 38%,rgba(255,255,255,.018) 38% 39%,transparent 39% 100%),
+        radial-gradient(circle at 50% -8%,rgba(199,169,108,.12),transparent 38%);
+      pointer-events:none;
+    }
+    .teacher-card::after{
+      content:"";
+      position:absolute;
+      width:260px;height:260px;
+      left:50%;top:28px;
+      transform:translateX(-50%);
+      border-radius:50%;
+      border:1px solid rgba(199,169,108,.08);
+      box-shadow:0 0 0 28px rgba(255,255,255,.008),0 0 0 56px rgba(255,255,255,.004);
+      pointer-events:none;
+    }
+    .teacher-media{
+      position:relative;
+      height:295px;
+      margin:-10px -10px 18px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      overflow:visible;
+      transform:translateZ(34px);
+      border:0;
+      background:transparent;
+      box-shadow:none;
+    }
+    .teacher-media::before{
+      content:"";
+      position:absolute;
+      left:50%;bottom:10px;
+      width:70%;height:54%;
+      transform:translateX(-50%);
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(76,201,185,.18),rgba(76,201,185,.05) 42%,transparent 72%);
+      filter:blur(8px);
+      pointer-events:none;
+    }
+    .teacher-media::after{
+      content:"";
+      position:absolute;
+      left:12%;right:12%;bottom:2px;
+      height:34px;
+      border-radius:50%;
+      background:radial-gradient(ellipse,rgba(0,0,0,.36),transparent 68%);
+      filter:blur(8px);
+      pointer-events:none;
+    }
+    .teacher-photo{
+      position:relative;
+      z-index:2;
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:contain;
+      object-position:center bottom;
+      transform-origin:center bottom;
+      transition:transform .55s cubic-bezier(.2,.7,.2,1),filter .55s ease;
+      filter:drop-shadow(0 22px 24px rgba(0,0,0,.34)) saturate(.98) contrast(1.02);
+      backface-visibility:hidden;
+    }
+    .teacher-card:hover .teacher-photo{
+      transform:translateY(-7px) scale(1.035);
+      filter:drop-shadow(0 28px 30px rgba(0,0,0,.40)) saturate(1.03) contrast(1.04);
+    }
+    .teacher-photo.photo-ahmed{transform:scale(.93);transform-origin:center bottom}
+    .teacher-card:hover .teacher-photo.photo-ahmed{transform:translateY(-7px) scale(.965)}
+    .teacher-photo.photo-moataz{transform:scale(1.02);transform-origin:center bottom}
+    .teacher-card:hover .teacher-photo.photo-moataz{transform:translateY(-7px) scale(1.055)}
+    .teacher-photo.photo-daleer{transform:scale(.92);transform-origin:center bottom}
+    .teacher-card:hover .teacher-photo.photo-daleer{transform:translateY(-7px) scale(.955)}
+    .teacher-placeholder{
+      position:relative;
+      z-index:2;
+      width:100%;height:100%;
+      display:grid;
+      place-items:center;
+    }
+    .teacher-placeholder .teacher-symbol{
+      width:92px;height:92px;margin:0;
+      border-radius:30px;
+      font-size:34px;
+      transform:none;
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(199,169,108,.15);
+      box-shadow:0 15px 35px rgba(0,0,0,.18);
+    }
+    .teacher-subject{
+      position:relative;
+      z-index:3;
+      width:max-content;
+      margin:0 auto 2px;
+      padding:7px 13px;
+      border-radius:999px;
+      color:#d8bc7a;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.02em;
+      background:rgba(199,169,108,.08);
+      border:1px solid rgba(199,169,108,.16);
+      transform:translateZ(34px);
+    }
+    .teacher-card h3{
+      position:relative;
+      z-index:3;
+      margin-top:10px;
+      text-align:center;
+      font-size:25px;
+      color:#f5eedf;
+      transform:translateZ(42px);
+    }
+    .teacher-card p{
+      position:relative;
+      z-index:3;
+      margin:12px auto 34px;
+      max-width:92%;
+      text-align:center;
+      color:#90a59f;
+      font-size:13px;
+      line-height:1.85;
+      transform:translateZ(28px);
+    }
+    .teacher-line{right:22%;left:22%;bottom:24px;background:linear-gradient(90deg,transparent,rgba(199,169,108,.58),transparent)}
+    .teacher-card:hover{
+      border-color:rgba(199,169,108,.34);
+      box-shadow:0 34px 90px rgba(0,0,0,.30),0 0 40px rgba(63,165,149,.07);
+      background:
+        radial-gradient(circle at 50% 12%,rgba(90,169,157,.22),transparent 36%),
+        linear-gradient(160deg,rgba(31,76,67,.88),rgba(5,20,17,.98));
+    }
+    @media(max-width:850px){
+      .teacher-card{min-height:500px;padding:18px 18px 24px}
+      .teacher-media{height:285px;margin:-6px -6px 16px}
+      .teacher-card h3{font-size:23px}
+      .teacher-card p{font-size:12.5px;margin-bottom:30px}
+      .teacher-photo.photo-ahmed{transform:scale(.90)}
+      .teacher-card:hover .teacher-photo.photo-ahmed{transform:translateY(-5px) scale(.925)}
+      .teacher-photo.photo-moataz{transform:scale(.98)}
+      .teacher-card:hover .teacher-photo.photo-moataz{transform:translateY(-5px) scale(1.015)}
+      .teacher-photo.photo-daleer{transform:scale(.90)}
+      .teacher-card:hover .teacher-photo.photo-daleer{transform:translateY(-5px) scale(.935)}
+    }
+</style>
 </head>
 <body>
   <canvas id="three-canvas" aria-hidden="true"></canvas>
@@ -1025,12 +1191,30 @@
           <p>أساتذة ومختصون يقدمون محتوى وإشرافاً تعليمياً يركز على الفهم والنتائج.</p>
         </div>
         <div class="teachers-grid">
-          <article class="teacher-card tilt-panel" data-tilt="7"><div class="teacher-symbol">π</div><div class="teacher-subject">رياضيات</div><h3>الاستاذ قصي العميري</h3><p>شرح مبسط واحترافية عالية في تدريس الرياضيات للمراحل الإعدادية.</p><span class="teacher-line"></span></article>
-          <article class="teacher-card tilt-panel" data-tilt="7"><div class="teacher-symbol">⚗</div><div class="teacher-subject">كيمياء</div><h3>الاستاذ احمد النداوي</h3><p>تقديم مادة الكيمياء بأسلوب علمي دقيق وشامل للامتحانات الوزارية.</p><span class="teacher-line"></span></article>
-          <article class="teacher-card tilt-panel" data-tilt="7"><div class="teacher-symbol">⚡</div><div class="teacher-subject">فيزياء</div><h3>الاستاذ معتز الوادي</h3><p>تمكين الطلاب من فهم النظريات والمسائل الفيزيائية بكل سهولة.</p><span class="teacher-line"></span></article>
-          <article class="teacher-card tilt-panel" data-tilt="7"><div class="teacher-symbol">⌖</div><div class="teacher-subject">فيزياء</div><h3>الاستاذ دلير الخالدي</h3><p>طرق تدريس حديثة ومبتكرة لتبسيط مادة الفيزياء للمرحلة الإعدادية.</p><span class="teacher-line"></span></article>
-          <article class="teacher-card tilt-panel" data-tilt="7"><div class="teacher-symbol">Φ</div><div class="teacher-subject">فيزياء</div><h3>الاستاذ حسين الصالحي</h3><p>خبرة متميزة في إيصال المعلومة الفيزيائية وتحقيق أعلى الدرجات.</p><span class="teacher-line"></span></article>
-          <article class="teacher-card tilt-panel" data-tilt="7"><div class="teacher-symbol">✦</div><div class="teacher-subject">نخبة التدريس</div><h3>الاستاذة نادية النعيمي</h3><p>ضمن نخبة مؤسسة مساعد التعليمية بأسلوب يركز على الفهم والمتابعة وتحقيق أفضل النتائج.</p><span class="teacher-line"></span></article>
+          <article class="teacher-card tilt-panel" data-tilt="7">
+            <div class="teacher-media"><div class="teacher-placeholder"><div class="teacher-symbol">π</div></div></div>
+            <div class="teacher-subject">رياضيات</div><h3>الاستاذ قصي العميري</h3><p>شرح مبسط واحترافية عالية في تدريس الرياضيات للمراحل الإعدادية.</p><span class="teacher-line"></span>
+          </article>
+          <article class="teacher-card tilt-panel" data-tilt="7">
+            <div class="teacher-media"><img class="teacher-photo photo-ahmed" src="teacher-ahmed.webp" alt="الأستاذ أحمد النداوي" loading="lazy" decoding="async"></div>
+            <div class="teacher-subject">كيمياء</div><h3>الاستاذ احمد النداوي</h3><p>تقديم مادة الكيمياء بأسلوب علمي دقيق وشامل للامتحانات الوزارية.</p><span class="teacher-line"></span>
+          </article>
+          <article class="teacher-card tilt-panel" data-tilt="7">
+            <div class="teacher-media"><img class="teacher-photo photo-moataz" src="teacher-moataz.webp" alt="الأستاذ معتز الوادي" loading="lazy" decoding="async"></div>
+            <div class="teacher-subject">فيزياء</div><h3>الاستاذ معتز الوادي</h3><p>تمكين الطلاب من فهم النظريات والمسائل الفيزيائية بكل سهولة.</p><span class="teacher-line"></span>
+          </article>
+          <article class="teacher-card tilt-panel" data-tilt="7">
+            <div class="teacher-media"><img class="teacher-photo photo-daleer" src="teacher-daleer.webp" alt="الأستاذ دلير الخالدي" loading="lazy" decoding="async"></div>
+            <div class="teacher-subject">فيزياء</div><h3>الاستاذ دلير الخالدي</h3><p>طرق تدريس حديثة ومبتكرة لتبسيط مادة الفيزياء للمرحلة الإعدادية.</p><span class="teacher-line"></span>
+          </article>
+          <article class="teacher-card tilt-panel" data-tilt="7">
+            <div class="teacher-media"><div class="teacher-placeholder"><div class="teacher-symbol">Φ</div></div></div>
+            <div class="teacher-subject">فيزياء</div><h3>الاستاذ حسين الصالحي</h3><p>خبرة متميزة في إيصال المعلومة الفيزيائية وتحقيق أعلى الدرجات.</p><span class="teacher-line"></span>
+          </article>
+          <article class="teacher-card tilt-panel" data-tilt="7">
+            <div class="teacher-media"><div class="teacher-placeholder"><div class="teacher-symbol">✦</div></div></div>
+            <div class="teacher-subject">نخبة التدريس</div><h3>الاستاذة نادية النعيمي</h3><p>ضمن نخبة مؤسسة مساعد التعليمية بأسلوب يركز على الفهم والمتابعة وتحقيق أفضل النتائج.</p><span class="teacher-line"></span>
+          </article>
         </div>
       </div>
     </section>
