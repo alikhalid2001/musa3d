@@ -539,6 +539,40 @@
       .app-cinematic-wrap{min-height:100vh}.draw-board{width:82vw;border-radius:28px}.drawing-pen{width:32px;height:155px}.pen-body{width:20px;height:124px}.pen-nib{top:119px;width:20px;height:34px}.pen-clip{height:60px}.floating-paper{width:105px;height:140px;padding:15px 12px;border-radius:14px}.floating-paper i{margin:10px 0;height:3px}.floating-paper b{font-size:19px}.fp-1{left:-3%;top:18%}.fp-2{right:-4%;top:17%}.fp-3{right:3%;bottom:17%}.app-cinema-copy{bottom:2vh}.app-giant-word{font-size:31vw;letter-spacing:-7px}.board-stamp{left:50%;right:auto;bottom:-38px;font-size:9px;padding:6px 9px}
     }
 
+    /* Mobile performance mode for the educators cinematic.
+       Keep the visual identity, but let the browser use native scrolling. */
+    @media(max-width:850px){
+      .teachers-cinematic-wrap{min-height:auto}
+      .teachers-cinematic-stage{
+        height:100svh;
+        min-height:620px;
+        max-height:820px;
+        perspective:none;
+        contain:paint;
+      }
+      .teachers-beam,.educators-giant,.academy-axis{display:none!important}
+      .teachers-stars{opacity:.24;will-change:auto!important}
+      .academy-orbit{
+        width:min(92vw,520px);
+        transform-style:flat!important;
+        will-change:auto!important;
+      }
+      .academy-core{
+        transform-style:flat!important;
+        will-change:auto!important;
+        box-shadow:0 0 0 10px rgba(255,255,255,.01),0 0 42px rgba(76,164,151,.12);
+      }
+      .academy-ring{
+        box-shadow:none!important;
+        will-change:auto!important;
+      }
+      .subject-orb{
+        will-change:auto!important;
+        box-shadow:0 10px 24px rgba(0,0,0,.20);
+      }
+      .teachers-cinema-caption{will-change:auto!important}
+    }
+
     /* =========================================================
        RESPONSIVE
     ========================================================= */
@@ -1047,50 +1081,100 @@
 
     /* =====================================================
        CINEMATIC TEACHERS — ACADEMY ORBIT
+       Desktop keeps the full pinned 3D scene.
+       Mobile uses a lightweight one-time reveal with NO pin,
+       so native scrolling stays smooth.
     ===================================================== */
     if (window.gsap && window.ScrollTrigger && !reducedMotion) {
-      const teacherPinDistance = () => Math.round(window.innerHeight * (window.innerWidth <= 850 ? 1.9 : 2.25));
-      const teacherTl = gsap.timeline({
-        scrollTrigger:{
-          trigger:'#teachersCinemaStage',
-          start:'top top',
-          end:()=>`+=${teacherPinDistance()}`,
-          scrub:.42,
-          pin:true,
-          pinSpacing:true,
-          anticipatePin:1,
-          invalidateOnRefresh:true
-        }
+      const teacherMedia = gsap.matchMedia();
+
+      teacherMedia.add("(min-width: 851px)", () => {
+        const teacherPinDistance = () => Math.round(window.innerHeight * 2.25);
+        const teacherTl = gsap.timeline({
+          scrollTrigger:{
+            trigger:'#teachersCinemaStage',
+            start:'top top',
+            end:()=>`+=${teacherPinDistance()}`,
+            scrub:.42,
+            pin:true,
+            pinSpacing:true,
+            anticipatePin:1,
+            invalidateOnRefresh:true
+          }
+        });
+
+        teacherTl
+          .fromTo('#academyOrbit',{scale:.42,z:-520,rotateX:28,rotateZ:-18,opacity:0},{scale:1,z:0,rotateX:0,rotateZ:0,opacity:1,duration:.26,ease:'power3.out'})
+          .fromTo('.subject-orb',{scale:.25,opacity:0,z:-220},{scale:1,opacity:1,z:0,stagger:.025,duration:.16,ease:'back.out(1.7)'},.10)
+          .fromTo('.educators-giant',{scale:.62,opacity:.05},{scale:1.06,opacity:.55,duration:.30},.12)
+          .to('.academy-ring.ring-a',{rotateZ:160,rotateX:70,duration:.46,ease:'none'},.20)
+          .to('.academy-ring.ring-b',{rotateZ:-210,rotateY:72,duration:.46,ease:'none'},.20)
+          .to('.academy-ring.ring-c',{rotateZ:245,rotateX:80,duration:.46,ease:'none'},.20)
+          .to('.subject-orb.orb-1',{x:80,y:80,scale:1.1,duration:.27},.35)
+          .to('.subject-orb.orb-2',{x:-95,y:65,scale:1.05,duration:.27},.35)
+          .to('.subject-orb.orb-3',{x:-85,y:-85,scale:1.08,duration:.27},.35)
+          .to('.subject-orb.orb-4',{x:85,y:-85,scale:1.08,duration:.27},.35)
+          .to('.subject-orb.orb-5',{x:95,y:65,scale:1.05,duration:.27},.35)
+          .to('#academyCore',{scale:1.24,rotateY:10,z:120,duration:.28,ease:'power2.inOut'},.42)
+          .fromTo('#teachersCinemaCaption',{opacity:0,y:45},{opacity:1,y:0,duration:.22,ease:'power3.out'},.50)
+          .to('#academyOrbit',{scale:2.1,z:430,rotateZ:25,opacity:0,duration:.28,ease:'power3.in'},.70)
+          .to('.educators-giant',{scale:1.28,opacity:0,duration:.22},.73)
+          .to('#teachersCinemaCaption',{opacity:0,y:-35,duration:.16},.78);
+
+        teacherTl
+          .to('.teachers-stars',{x:28,y:-18,duration:1,ease:'none'},0)
+          .to('.beam-a',{x:-110,rotate:22,duration:1,ease:'none'},0)
+          .to('.beam-b',{x:120,rotate:-20,duration:1,ease:'none'},0);
+
+        gsap.from('.teachers-grid .teacher-card',{
+          opacity:0,y:120,z:-180,rotateY:(i)=>i%2?12:-12,rotateX:8,scale:.90,stagger:.08,duration:.82,ease:'power3.out',
+          scrollTrigger:{trigger:'.teachers-grid',start:'top 84%',once:true}
+        });
       });
 
-      teacherTl
-        .fromTo('#academyOrbit',{scale:.42,z:-520,rotateX:28,rotateZ:-18,opacity:0},{scale:1,z:0,rotateX:0,rotateZ:0,opacity:1,duration:.26,ease:'power3.out'})
-        .fromTo('.subject-orb',{scale:.25,opacity:0,z:-220},{scale:1,opacity:1,z:0,stagger:.025,duration:.16,ease:'back.out(1.7)'},.10)
-        .fromTo('.educators-giant',{scale:.62,opacity:.05},{scale:1.06,opacity:.55,duration:.30},.12)
-        .to('.academy-ring.ring-a',{rotateZ:160,rotateX:70,duration:.46,ease:'none'},.20)
-        .to('.academy-ring.ring-b',{rotateZ:-210,rotateY:72,duration:.46,ease:'none'},.20)
-        .to('.academy-ring.ring-c',{rotateZ:245,rotateX:80,duration:.46,ease:'none'},.20)
-        .to('.subject-orb.orb-1',{x:80,y:80,scale:1.1,duration:.27},.35)
-        .to('.subject-orb.orb-2',{x:-95,y:65,scale:1.05,duration:.27},.35)
-        .to('.subject-orb.orb-3',{x:-85,y:-85,scale:1.08,duration:.27},.35)
-        .to('.subject-orb.orb-4',{x:85,y:-85,scale:1.08,duration:.27},.35)
-        .to('.subject-orb.orb-5',{x:95,y:65,scale:1.05,duration:.27},.35)
-        .to('#academyCore',{scale:1.24,rotateY:10,z:120,duration:.28,ease:'power2.inOut'},.42)
-        .fromTo('#teachersCinemaCaption',{opacity:0,y:45},{opacity:1,y:0,duration:.22,ease:'power3.out'},.50)
-        .to('#academyOrbit',{scale:2.1,z:430,rotateZ:25,opacity:0,duration:.28,ease:'power3.in'},.70)
-        .to('.educators-giant',{scale:1.28,opacity:0,duration:.22},.73)
-        .to('#teachersCinemaCaption',{opacity:0,y:-35,duration:.16},.78);
+      teacherMedia.add("(max-width: 850px)", () => {
+        /* Important for iPhone/Android:
+           no pin, no scrub and no continuously changing 3D transforms. */
+        gsap.set(['#academyOrbit','.subject-orb','#academyCore','.academy-ring','.teachers-stars','.beam-a','.beam-b'],{
+          clearProps:'x,y,z,scale,rotation,rotationX,rotationY,rotationZ,opacity'
+        });
+        gsap.set('#teachersCinemaCaption',{opacity:0,y:24});
 
-      teacherTl
-        .to('.teachers-stars',{x:28,y:-18,duration:1,ease:'none'},0)
-        .to('.beam-a',{x:-110,rotate:22,duration:1,ease:'none'},0)
-        .to('.beam-b',{x:120,rotate:-20,duration:1,ease:'none'},0);
+        const mobileTeacherTl = gsap.timeline({
+          scrollTrigger:{
+            trigger:'#teachersCinemaStage',
+            start:'top 72%',
+            once:true
+          }
+        });
 
-      gsap.from('.teachers-grid .teacher-card',{
-        opacity:0,y:120,z:-180,rotateY:(i)=>i%2?12:-12,rotateX:8,scale:.90,stagger:.08,duration:.82,ease:'power3.out',
-        scrollTrigger:{trigger:'.teachers-grid',start:'top 84%',once:true}
+        mobileTeacherTl
+          .fromTo('#academyOrbit',
+            {opacity:0,scale:.88,y:34},
+            {opacity:1,scale:1,y:0,duration:.72,ease:'power2.out'}
+          )
+          .fromTo('.subject-orb',
+            {opacity:0},
+            {opacity:1,duration:.38,stagger:.045,ease:'power1.out'},
+            .16
+          )
+          .fromTo('#teachersCinemaCaption',
+            {opacity:0,y:24},
+            {opacity:1,y:0,duration:.48,ease:'power2.out'},
+            .34
+          );
+
+        gsap.from('.teachers-grid .teacher-card',{
+          opacity:0,y:52,stagger:.055,duration:.58,ease:'power2.out',
+          scrollTrigger:{trigger:'.teachers-grid',start:'top 88%',once:true}
+        });
+
+        return () => {
+          mobileTeacherTl.kill();
+        };
       });
     }
+
 
     /* =====================================================
        CINEMATIC APP — THE PEN DRAWS THE ENTIRE REAL LOGO
