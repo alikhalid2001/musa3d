@@ -315,6 +315,82 @@
     .stats-section{padding:80px 0 120px;background:linear-gradient(180deg,#061311,#020b0a)}
     .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
     .stat{position:relative;padding:55px 35px;display:flex;flex-direction:column;align-items:center;text-align:center}.stat:not(:last-child)::after{content:"";position:absolute;top:25%;bottom:25%;left:0;width:1px;background:var(--line)}.stat strong{direction:ltr;color:var(--cream);font:700 clamp(44px,5vw,72px) "Space Grotesk"}.stat span{margin-top:8px;color:#82958f;font-size:15px}
+
+
+    /* =========================================================
+       SOCIAL CONTACT BAR
+    ========================================================= */
+    .social-strip{
+      position:relative;
+      padding:34px 0 38px;
+      background:
+        radial-gradient(circle at 50% 0%,rgba(78,159,146,.10),transparent 38%),
+        #020b0a;
+      overflow:hidden;
+    }
+    .social-strip::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:0;
+      width:min(1100px,86vw);
+      height:1px;
+      transform:translateX(-50%);
+      background:linear-gradient(90deg,transparent,rgba(199,169,108,.34),transparent);
+    }
+    .social-bar{
+      position:relative;
+      max-width:900px;
+      margin:auto;
+      padding:10px;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      border:1px solid rgba(242,234,217,.11);
+      border-radius:28px;
+      background:linear-gradient(145deg,rgba(30,72,65,.72),rgba(5,20,18,.92));
+      box-shadow:0 30px 80px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.05);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      perspective:1400px;
+    }
+    .social-item{
+      min-height:96px;
+      padding:18px 22px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:16px;
+      border:1px solid transparent;
+      border-radius:21px;
+      background:rgba(255,255,255,.018);
+      color:var(--cream);
+      transition:background .3s ease,border-color .3s ease,box-shadow .3s ease;
+      transform-style:preserve-3d;
+    }
+    .social-item:hover{
+      background:rgba(255,255,255,.055);
+      border-color:rgba(199,169,108,.28);
+      box-shadow:0 20px 40px rgba(0,0,0,.22);
+    }
+    .social-icon{
+      width:56px;
+      height:56px;
+      flex:0 0 56px;
+      display:grid;
+      place-items:center;
+      border-radius:18px;
+      border:1px solid rgba(199,169,108,.2);
+      background:linear-gradient(145deg,rgba(199,169,108,.09),rgba(255,255,255,.025));
+      transform:translateZ(24px);
+    }
+    .social-icon svg{width:27px;height:27px;fill:none;stroke:var(--gold);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+    .telegram-social .social-icon svg{fill:var(--gold);stroke:none}
+    .social-copy{display:flex;flex-direction:column;gap:5px;transform:translateZ(18px)}
+    .social-copy span{color:#81918e;font-size:13px}
+    .social-copy strong{direction:ltr;font:600 18px "Space Grotesk",sans-serif;color:var(--cream)}
+    .social-arrow{margin-right:auto;color:var(--gold);font-size:22px;transform:translateZ(20px)}
+
     .site-footer{padding:30px 0;background:#020b0a}.footer-inner{min-height:80px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid rgba(255,255,255,.06);padding-top:28px;color:#71857f;font-size:13px}.footer-brand{display:flex;align-items:center;gap:10px;color:var(--cream)}.footer-brand img{width:76px;height:46px;object-fit:contain;border-radius:0!important;clip-path:none!important}.footer-brand>div{display:flex;flex-direction:column}.footer-brand small{direction:ltr;margin-top:3px;font:600 8px "Space Grotesk";letter-spacing:1.4px;color:#688079}.site-footer a{color:#a8bbb5}
 
     .tilt-panel{transform-style:preserve-3d;will-change:transform}.magnetic{will-change:transform}
@@ -336,6 +412,7 @@
       .app-section,.services-section,.teachers-section{padding:100px 0}.app-layout{grid-template-columns:1fr}.phone-stage{order:2;min-height:620px}.app-copy{order:1}.section-heading{grid-template-columns:1fr;gap:20px;margin-bottom:45px}.section-heading h2,.app-copy h2{font-size:clamp(46px,12vw,70px)}
       .services-grid{grid-template-columns:1fr}.service-card{min-height:260px}.service-card strong{margin-top:45px}.service-detail{grid-template-columns:1fr;gap:14px}.detail-number{font-size:36px}.detail-badge{justify-self:start}
       .teachers-grid{grid-template-columns:1fr}.teacher-card{min-height:310px}.stats-grid{grid-template-columns:1fr}.stat:not(:last-child)::after{top:auto;bottom:0;right:20%;left:20%;width:auto;height:1px}.footer-inner{flex-direction:column;text-align:center}
+      .social-strip{padding:26px 0 30px}.social-bar{grid-template-columns:1fr;border-radius:23px}.social-item{min-height:84px;padding:15px 17px}.social-icon{width:50px;height:50px;flex-basis:50px}.social-copy strong{font-size:16px}
     }
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
   </style>
@@ -559,6 +636,58 @@
       </div>
     </section>
   </main>
+
+
+  <!-- SOCIAL CONTACT BAR -->
+  <section class="social-strip" aria-label="وسائل التواصل">
+    <div class="page-width">
+      <div class="social-bar">
+
+        <a
+          class="social-item tilt-panel"
+          data-tilt="5"
+          href="https://www.instagram.com/musa3d.iq/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram musa3d.iq"
+        >
+          <span class="social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+              <circle cx="12" cy="12" r="4"></circle>
+              <circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"></circle>
+            </svg>
+          </span>
+          <span class="social-copy">
+            <span>Instagram</span>
+            <strong>musa3d.iq</strong>
+          </span>
+          <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a
+          class="social-item telegram-social tilt-panel"
+          data-tilt="5"
+          href="https://t.me/YOUR_TELEGRAM_USERNAME"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Telegram"
+        >
+          <span class="social-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M21.8 3.2 18.6 20c-.2 1.1-.8 1.4-1.7.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1L18 6.7c.4-.4-.1-.6-.6-.3L6.2 13.5 1.4 12c-1-.3-1-1 .2-1.5L20.3 3.3c.9-.3 1.7.2 1.5-.1z"></path>
+            </svg>
+          </span>
+          <span class="social-copy">
+            <span>Telegram</span>
+            <strong>@musa3d.iq</strong>
+          </span>
+          <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
 
   <footer class="site-footer">
     <div class="page-width footer-inner">
