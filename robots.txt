@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://musa3d-six.vercel.app/sitemap.xml
