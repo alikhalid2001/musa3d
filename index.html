@@ -365,7 +365,7 @@
         radial-gradient(circle at 82% 20%,rgba(73,155,143,.08),transparent 22%),
         linear-gradient(180deg,#061311,#081a17,#061311);
     }
-    .teachers-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;perspective:1600px}.teacher-card{min-height:390px;padding:28px;border:1px solid var(--line);border-radius:27px;background:linear-gradient(160deg,rgba(27,68,61,.66),rgba(6,22,19,.88));position:relative;overflow:hidden;transform-style:preserve-3d}.teacher-card::after{content:"";position:absolute;width:180px;height:180px;left:-95px;top:-85px;border-radius:50%;border:1px solid rgba(199,169,108,.11);box-shadow:0 0 0 24px rgba(255,255,255,.012),0 0 0 48px rgba(255,255,255,.007)}.teacher-symbol{width:70px;height:70px;display:grid;place-items:center;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);color:var(--gold);font-size:28px;transform:translateZ(45px)}.teacher-subject{margin-top:45px;color:#72aa9f;font-size:12px}.teacher-card h3{margin-top:8px;font-size:24px;line-height:1.35;transform:translateZ(42px)}.teacher-card p{margin-top:15px;color:#8ea39d;font-size:14px;line-height:1.8;transform:translateZ(28px)}.teacher-line{position:absolute;right:28px;left:28px;bottom:25px;height:1px;background:linear-gradient(90deg,transparent,rgba(199,169,108,.5))}
+    .teachers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;perspective:1600px}.teacher-card{min-height:390px;padding:28px;border:1px solid var(--line);border-radius:27px;background:linear-gradient(160deg,rgba(27,68,61,.66),rgba(6,22,19,.88));position:relative;overflow:hidden;transform-style:preserve-3d}.teacher-card::after{content:"";position:absolute;width:180px;height:180px;left:-95px;top:-85px;border-radius:50%;border:1px solid rgba(199,169,108,.11);box-shadow:0 0 0 24px rgba(255,255,255,.012),0 0 0 48px rgba(255,255,255,.007)}.teacher-symbol{width:70px;height:70px;display:grid;place-items:center;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);color:var(--gold);font-size:28px;transform:translateZ(45px)}.teacher-subject{margin-top:45px;color:#72aa9f;font-size:12px}.teacher-card h3{margin-top:8px;font-size:24px;line-height:1.35;transform:translateZ(42px)}.teacher-card p{margin-top:15px;color:#8ea39d;font-size:14px;line-height:1.8;transform:translateZ(28px)}.teacher-line{position:absolute;right:28px;left:28px;bottom:25px;height:1px;background:linear-gradient(90deg,transparent,rgba(199,169,108,.5))}
 
     /* =========================================================
        STATS / FOOTER
@@ -770,6 +770,7 @@
     .name-3{left:7%;bottom:22%}.name-3::after{left:100%;top:46%;transform:rotate(195deg);transform-origin:left center}
     .name-4{left:5%;top:25%}.name-4::after{left:100%;top:50%;transform:rotate(165deg);transform-origin:left center}
     .name-5{left:50%;top:9%;transform:translateX(-50%)}.name-5::after{left:50%;top:100%;width:66px;transform:rotate(90deg);transform-origin:left center}
+    .name-6{left:50%;top:73%;transform:translateX(-50%)}.name-6::after{left:50%;bottom:100%;width:62px;transform:rotate(-90deg);transform-origin:left center}
 
     .teachers-cinema-caption{z-index:45!important;bottom:5.5vh!important;text-shadow:0 10px 28px rgba(0,0,0,.50)}
 
@@ -789,6 +790,8 @@
       .name-4{left:2%;top:25%}
       .name-5{top:9%}
       .name-5::after{width:29px}
+      .name-6{left:50%;top:71%;transform:translateX(-50%)}
+      .name-6::after{width:29px}
       .teachers-cinema-caption{bottom:5svh!important}
     }
 
@@ -1004,6 +1007,7 @@
             <div class="plane-name name-3"><i></i><span>معتز الوادي</span></div>
             <div class="plane-name name-4"><i></i><span>حسين الصالحي</span></div>
             <div class="plane-name name-5"><i></i><span>دلير الخالدي</span></div>
+            <div class="plane-name name-6"><i></i><span>نادية النعيمي</span></div>
           </div>
 
           <div class="teachers-cinema-caption" id="teachersCinemaCaption">
@@ -1026,6 +1030,7 @@
           <article class="teacher-card tilt-panel" data-tilt="7"><div class="teacher-symbol">⚡</div><div class="teacher-subject">فيزياء</div><h3>الاستاذ معتز الوادي</h3><p>تمكين الطلاب من فهم النظريات والمسائل الفيزيائية بكل سهولة.</p><span class="teacher-line"></span></article>
           <article class="teacher-card tilt-panel" data-tilt="7"><div class="teacher-symbol">⌖</div><div class="teacher-subject">فيزياء</div><h3>الاستاذ دلير الخالدي</h3><p>طرق تدريس حديثة ومبتكرة لتبسيط مادة الفيزياء للمرحلة الإعدادية.</p><span class="teacher-line"></span></article>
           <article class="teacher-card tilt-panel" data-tilt="7"><div class="teacher-symbol">Φ</div><div class="teacher-subject">فيزياء</div><h3>الاستاذ حسين الصالحي</h3><p>خبرة متميزة في إيصال المعلومة الفيزيائية وتحقيق أعلى الدرجات.</p><span class="teacher-line"></span></article>
+          <article class="teacher-card tilt-panel" data-tilt="7"><div class="teacher-symbol">✦</div><div class="teacher-subject">نخبة التدريس</div><h3>الاستاذة نادية النعيمي</h3><p>ضمن نخبة مؤسسة مساعد التعليمية بأسلوب يركز على الفهم والمتابعة وتحقيق أفضل النتائج.</p><span class="teacher-line"></span></article>
         </div>
       </div>
     </section>
@@ -1364,14 +1369,15 @@
           .fromTo('.name-2',{x:108,y:-18,opacity:0,scale:.70},{x:0,y:0,opacity:1,scale:1,duration:.11,ease:'back.out(1.35)'},.59)
           .fromTo('.name-3',{x:-108,y:-18,opacity:0,scale:.70},{x:0,y:0,opacity:1,scale:1,duration:.11,ease:'back.out(1.35)'},.66)
           .fromTo('.name-4',{x:-105,y:24,opacity:0,scale:.70},{x:0,y:0,opacity:1,scale:1,duration:.11,ease:'back.out(1.35)'},.73)
-          .fromTo('.name-5',{y:-48,opacity:0,scale:.70},{y:0,opacity:1,scale:1,duration:.11,ease:'back.out(1.35)'},.80)
-          .fromTo('#teachersCinemaCaption',{opacity:0,y:42},{opacity:1,y:0,duration:.14,ease:'power3.out'},.83)
+          .fromTo('.name-5',{y:-48,opacity:0,scale:.70},{y:0,opacity:1,scale:1,duration:.11,ease:'back.out(1.35)'},.78)
+          .fromTo('.name-6',{y:48,opacity:0,scale:.70},{y:0,opacity:1,scale:1,duration:.11,ease:'back.out(1.35)'},.84)
+          .fromTo('#teachersCinemaCaption',{opacity:0,y:42},{opacity:1,y:0,duration:.14,ease:'power3.out'},.88)
 
           /* A subtle last push, then dissolve into the actual teacher cards. */
-          .to('#elitePlaneWrap',{scale:1.11,y:-18,duration:.12,ease:'none'},.86)
-          .to('.plane-name',{y:'-=4',duration:.10,stagger:.005,ease:'none'},.88)
-          .to('#academyOrbit',{scale:1.08,opacity:0,duration:.16,ease:'power3.in'},.94)
-          .to('#teachersCinemaCaption',{opacity:0,y:-20,duration:.10},.95);
+          .to('#elitePlaneWrap',{scale:1.11,y:-18,duration:.12,ease:'none'},.91)
+          .to('.plane-name',{y:'-=4',duration:.10,stagger:.005,ease:'none'},.92)
+          .to('#academyOrbit',{scale:1.08,opacity:0,duration:.16,ease:'power3.in'},.97)
+          .to('#teachersCinemaCaption',{opacity:0,y:-20,duration:.10},.975);
 
         gsap.from('.teachers-grid .teacher-card',{
           opacity:0,y:88,z:-110,rotateY:(i)=>i%2?8:-8,scale:.94,
@@ -1419,9 +1425,10 @@
           .fromTo('.name-2',{x:30,y:-6,opacity:0,scale:.82},{x:0,y:0,opacity:1,scale:1,duration:.075},.58)
           .fromTo('.name-3',{x:-30,y:-6,opacity:0,scale:.82},{x:0,y:0,opacity:1,scale:1,duration:.075},.66)
           .fromTo('.name-4',{x:-30,y:7,opacity:0,scale:.82},{x:0,y:0,opacity:1,scale:1,duration:.075},.74)
-          .fromTo('.name-5',{y:-20,opacity:0,scale:.82},{y:0,opacity:1,scale:1,duration:.075},.82)
-          .to('#teachersCinemaCaption',{opacity:1,y:0,duration:.10},.87)
-          .to('#elitePlaneWrap',{scale:1.05,y:-10,duration:.10},.90);
+          .fromTo('.name-5',{y:-20,opacity:0,scale:.82},{y:0,opacity:1,scale:1,duration:.075},.78)
+          .fromTo('.name-6',{y:20,opacity:0,scale:.82},{y:0,opacity:1,scale:1,duration:.075},.84)
+          .to('#teachersCinemaCaption',{opacity:1,y:0,duration:.10},.90)
+          .to('#elitePlaneWrap',{scale:1.05,y:-10,duration:.10},.93);
 
         gsap.from('.teachers-grid .teacher-card',{
           opacity:0,y:42,stagger:.05,duration:.50,ease:'power2.out',
