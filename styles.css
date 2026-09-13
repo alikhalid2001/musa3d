@@ -850,6 +850,8 @@
     .teacher-card:hover .teacher-photo.photo-moataz{transform:translateY(-7px) scale(1.055)}
     .teacher-photo.photo-daleer{transform:scale(.92);transform-origin:center bottom}
     .teacher-card:hover .teacher-photo.photo-daleer{transform:translateY(-7px) scale(.955)}
+    .teacher-photo.photo-hussein{transform:scale(.94);transform-origin:center bottom}
+    .teacher-card:hover .teacher-photo.photo-hussein{transform:translateY(-7px) scale(.975)}
     .teacher-placeholder{
       position:relative;
       z-index:2;
@@ -920,6 +922,8 @@
       .teacher-card:hover .teacher-photo.photo-moataz{transform:translateY(-5px) scale(1.015)}
       .teacher-photo.photo-daleer{transform:scale(.90)}
       .teacher-card:hover .teacher-photo.photo-daleer{transform:translateY(-5px) scale(.935)}
+      .teacher-photo.photo-hussein{transform:scale(.92)}
+      .teacher-card:hover .teacher-photo.photo-hussein{transform:translateY(-5px) scale(.955)}
     }
 
 /* CSP-safe replacements for the former inline chart styles */
