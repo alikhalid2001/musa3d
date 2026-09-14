@@ -646,7 +646,7 @@
     /* Transparent real aircraft cut-out. It comes from the distance toward the viewer. */
     .elite-plane-wrap{
       position:absolute;
-      left:50%;top:51%;
+      left:50%;top:46%;
       z-index:12;
       width:min(1080px,86vw);
       transform:translate(-50%,-50%);
@@ -705,7 +705,7 @@
     @media(max-width:850px){
       .plane-cinema{width:100vw!important;height:100svh!important;transform-style:flat!important;overflow:hidden}
       .plane-cinema .academy-ring{opacity:.04!important}
-      .elite-plane-wrap{width:min(560px,104vw);left:50%;top:50%}
+      .elite-plane-wrap{width:min(560px,104vw);left:50%;top:46%}
       .plane-brand-mark{display:none!important}
       .elite-cloud{filter:blur(11px)}
       .elite-cloud.c3,.elite-cloud.c4{display:none}
