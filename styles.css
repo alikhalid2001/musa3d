@@ -1727,3 +1727,128 @@ a, button{
     bottom:4svh!important;
   }
 }
+
+
+/* =========================================================
+   MUSA3D GALAXY INTRO
+   Emerald / teal / gold universe matching the site identity.
+========================================================= */
+.intro-sticky{
+  isolation:isolate;
+}
+
+.galaxy-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  display:block;
+  pointer-events:none;
+  opacity:1;
+  transform:translateZ(0);
+}
+
+.galaxy-core-glow{
+  position:absolute;
+  left:50%;
+  top:48%;
+  width:min(760px,58vw);
+  aspect-ratio:1;
+  z-index:1;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+      rgba(242,234,217,.19) 0 2%,
+      rgba(199,169,108,.20) 5%,
+      rgba(127,180,170,.14) 15%,
+      rgba(39,101,91,.08) 30%,
+      transparent 66%);
+  filter:blur(10px);
+  mix-blend-mode:screen;
+  opacity:.92;
+}
+
+.galaxy-vignette{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 47%,
+      transparent 0 25%,
+      rgba(2,10,9,.08) 43%,
+      rgba(2,10,9,.52) 78%,
+      rgba(2,8,7,.88) 100%),
+    linear-gradient(180deg,rgba(2,10,9,.05),rgba(2,10,9,.20));
+}
+
+.intro-grid,
+.intro-aura,
+.intro-scan{
+  z-index:3;
+}
+
+.intro-grid{
+  opacity:.08;
+}
+
+.intro-aura{
+  opacity:.72;
+  mix-blend-mode:screen;
+}
+
+.intro-scan{
+  opacity:.18;
+}
+
+.intro-core{
+  z-index:5;
+}
+
+.intro-caption{
+  z-index:6;
+}
+
+.intro-bridge{
+  z-index:7;
+}
+
+.intro-galaxy-tag{
+  display:block!important;
+  margin:8px 0 2px!important;
+  color:rgba(199,169,108,.88)!important;
+  direction:ltr;
+  font-family:"Space Grotesk",sans-serif;
+  font-size:10px!important;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+
+@media (max-width:850px){
+  .galaxy-core-glow{
+    top:46%;
+    width:min(560px,92vw);
+    opacity:.74;
+    filter:blur(8px);
+  }
+
+  .galaxy-vignette{
+    background:
+      radial-gradient(circle at 50% 45%,transparent 0 21%,rgba(2,10,9,.14) 45%,rgba(2,9,8,.76) 88%),
+      linear-gradient(180deg,rgba(2,10,9,.02),rgba(2,10,9,.18));
+  }
+
+  .intro-galaxy-tag{
+    font-size:8.5px!important;
+    letter-spacing:.15em;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .galaxy-canvas{opacity:.60}
+  .galaxy-core-glow{opacity:.55}
+}

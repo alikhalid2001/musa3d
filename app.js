@@ -535,3 +535,267 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
       requestAnimationFrame(()=>window.ScrollTrigger?.refresh());
       if(document.fonts?.ready){document.fonts.ready.then(()=>window.ScrollTrigger?.refresh());}
     });
+
+
+/* =====================================================
+   MUSA3D GALAXY INTRO
+   Adapted from the supplied spiral-galaxy idea, but:
+   - uses the existing Three.js already loaded by MUSA3D
+   - preserves MUSA3D green / teal / gold palette
+   - dramatically lowers particle count for performance
+   - adapts automatically to mobile / weak devices
+===================================================== */
+(function initMusa3dGalaxy(){
+  const canvas = document.querySelector('#galaxy-canvas');
+  const intro = document.querySelector('#intro');
+  if(!canvas || !intro || !window.THREE) return;
+
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const dataSaver = !!(connection && connection.saveData);
+  const memory = navigator.deviceMemory || 8;
+  const cpu = navigator.hardwareConcurrency || 8;
+  const isMobile = window.matchMedia('(max-width: 850px)').matches;
+  const reduceGalaxyMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lowPower = dataSaver || memory <= 4 || cpu <= 4;
+
+  const particleCount = reduceGalaxyMotion
+    ? (isMobile ? 2200 : 4200)
+    : lowPower
+      ? (isMobile ? 3200 : 6500)
+      : (isMobile ? 7000 : 18000);
+
+  const starCount = reduceGalaxyMotion
+    ? (isMobile ? 180 : 320)
+    : (isMobile ? 500 : 1200);
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha:true,
+    antialias:false,
+    powerPreference:'high-performance'
+  });
+  renderer.setClearColor(0x000000,0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.25));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(58,1,.1,100);
+  camera.position.set(0,0,4.65);
+
+  const galaxy = new THREE.Group();
+  scene.add(galaxy);
+
+  const positions = new Float32Array(particleCount * 3);
+  const colors = new Float32Array(particleCount * 3);
+  const sizes = new Float32Array(particleCount);
+
+  const inside = new THREE.Color('#d6c39a');
+  const middle = new THREE.Color('#7fb4aa');
+  const outside = new THREE.Color('#235b52');
+
+  const radiusMax = 3.35;
+  const branches = 5;
+  const spin = 2.15;
+  const randomness = .58;
+  const randomnessPower = 3.35;
+
+  for(let i=0;i<particleCount;i++){
+    const i3 = i*3;
+    const radius = Math.pow(Math.random(),.66) * radiusMax;
+    const branchAngle = ((i % branches) / branches) * Math.PI * 2;
+    const spinAngle = radius * spin;
+
+    const randomAmp = randomness * (.22 + radius/radiusMax);
+    const randomX = Math.pow(Math.random(),randomnessPower) * (Math.random()<.5?-1:1) * randomAmp;
+    const randomY = Math.pow(Math.random(),randomnessPower) * (Math.random()<.5?-1:1) * randomAmp;
+    const randomZ = Math.pow(Math.random(),randomnessPower) * (Math.random()<.5?-1:1) * randomAmp * .34;
+
+    const angle = branchAngle + spinAngle;
+    positions[i3]   = Math.cos(angle) * radius + randomX;
+    positions[i3+1] = Math.sin(angle) * radius * .72 + randomY * .72;
+    positions[i3+2] = randomZ - radius * .035;
+
+    const t = Math.min(1,radius/radiusMax);
+    const c = inside.clone();
+    if(t < .46){
+      c.lerp(middle,t/.46);
+    }else{
+      c.copy(middle).lerp(outside,(t-.46)/.54);
+    }
+
+    // A small proportion of warm gold particles keeps the MUSA3D identity visible.
+    if(Math.random() < .13){
+      c.lerp(new THREE.Color('#c7a96c'), .58);
+    }
+
+    colors[i3] = c.r;
+    colors[i3+1] = c.g;
+    colors[i3+2] = c.b;
+    sizes[i] = .7 + Math.random() * 1.4;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
+  geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
+  geometry.setAttribute('aSize',new THREE.BufferAttribute(sizes,1));
+
+  const material = new THREE.PointsMaterial({
+    size:isMobile ? .030 : .023,
+    sizeAttenuation:true,
+    depthWrite:false,
+    transparent:true,
+    opacity:.92,
+    vertexColors:true,
+    blending:THREE.AdditiveBlending
+  });
+
+  const points = new THREE.Points(geometry,material);
+  points.rotation.x = .08;
+  galaxy.add(points);
+
+  // Soft central star cluster
+  const coreGeometry = new THREE.BufferGeometry();
+  const coreCount = isMobile ? 360 : 760;
+  const corePos = new Float32Array(coreCount*3);
+  const coreColors = new Float32Array(coreCount*3);
+  const coreGold = new THREE.Color('#d8bd7e');
+  const coreCream = new THREE.Color('#f2ead9');
+
+  for(let i=0;i<coreCount;i++){
+    const i3=i*3;
+    const r=Math.pow(Math.random(),2.2)*.72;
+    const a=Math.random()*Math.PI*2;
+    corePos[i3]=Math.cos(a)*r;
+    corePos[i3+1]=Math.sin(a)*r*.72;
+    corePos[i3+2]=(Math.random()-.5)*.18;
+    const c=coreGold.clone().lerp(coreCream,Math.random()*.55);
+    coreColors[i3]=c.r; coreColors[i3+1]=c.g; coreColors[i3+2]=c.b;
+  }
+  coreGeometry.setAttribute('position',new THREE.BufferAttribute(corePos,3));
+  coreGeometry.setAttribute('color',new THREE.BufferAttribute(coreColors,3));
+  const coreMaterial = new THREE.PointsMaterial({
+    size:isMobile ? .038 : .030,
+    sizeAttenuation:true,
+    depthWrite:false,
+    transparent:true,
+    opacity:.9,
+    vertexColors:true,
+    blending:THREE.AdditiveBlending
+  });
+  const corePoints = new THREE.Points(coreGeometry,coreMaterial);
+  galaxy.add(corePoints);
+
+  // Sparse distant star field for depth.
+  const bgGeometry = new THREE.BufferGeometry();
+  const bgPos = new Float32Array(starCount*3);
+  const bgColors = new Float32Array(starCount*3);
+  const teal = new THREE.Color('#7fb4aa');
+  const cream = new THREE.Color('#d7d0be');
+
+  for(let i=0;i<starCount;i++){
+    const i3=i*3;
+    bgPos[i3]=(Math.random()-.5)*12;
+    bgPos[i3+1]=(Math.random()-.5)*8;
+    bgPos[i3+2]=-2-Math.random()*7;
+    const c=teal.clone().lerp(cream,Math.random()*.45);
+    bgColors[i3]=c.r; bgColors[i3+1]=c.g; bgColors[i3+2]=c.b;
+  }
+  bgGeometry.setAttribute('position',new THREE.BufferAttribute(bgPos,3));
+  bgGeometry.setAttribute('color',new THREE.BufferAttribute(bgColors,3));
+  const bgMaterial = new THREE.PointsMaterial({
+    size:isMobile ? .020 : .015,
+    sizeAttenuation:true,
+    depthWrite:false,
+    transparent:true,
+    opacity:.34,
+    vertexColors:true,
+    blending:THREE.AdditiveBlending
+  });
+  const bgStars = new THREE.Points(bgGeometry,bgMaterial);
+  scene.add(bgStars);
+
+  let w=1,h=1;
+  function resizeGalaxy(){
+    const rect = canvas.getBoundingClientRect();
+    w = Math.max(1,Math.round(rect.width || window.innerWidth));
+    h = Math.max(1,Math.round(rect.height || window.innerHeight));
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+  }
+  resizeGalaxy();
+
+  let scrollProgress=0;
+  function updateGalaxyScroll(){
+    const introTop = intro.offsetTop;
+    const travel = Math.max(1,intro.offsetHeight-window.innerHeight);
+    scrollProgress = Math.max(0,Math.min(1,(window.scrollY-introTop)/travel));
+  }
+  updateGalaxyScroll();
+
+  let mx=0,my=0;
+  window.addEventListener('pointermove',(e)=>{
+    if(isMobile || reduceGalaxyMotion) return;
+    mx=(e.clientX/window.innerWidth-.5);
+    my=(e.clientY/window.innerHeight-.5);
+  },{passive:true});
+  window.addEventListener('scroll',updateGalaxyScroll,{passive:true});
+
+  let resizeRAF=0;
+  window.addEventListener('resize',()=>{
+    cancelAnimationFrame(resizeRAF);
+    resizeRAF=requestAnimationFrame(resizeGalaxy);
+  },{passive:true});
+
+  let active=true;
+  const observer = new IntersectionObserver((entries)=>{
+    active=entries[0]?.isIntersecting ?? true;
+  },{rootMargin:'20% 0px'});
+  observer.observe(intro);
+
+  const clock = new THREE.Clock();
+  let lastFrame=0;
+
+  function renderGalaxy(now=0){
+    requestAnimationFrame(renderGalaxy);
+    if(!active || document.hidden) return;
+
+    const frameGap = lowPower || isMobile ? 33 : 20;
+    if(now-lastFrame<frameGap) return;
+    lastFrame=now;
+
+    const t=clock.getElapsedTime();
+    const p=scrollProgress;
+
+    // Slow cinematic rotation + scroll-driven travel into the center.
+    galaxy.rotation.z = (reduceGalaxyMotion ? .10 : t*.022) + p*.64;
+    galaxy.rotation.x = .08 + p*.05 + my*.035;
+    galaxy.rotation.y += ((mx*.12)-galaxy.rotation.y)*.035;
+
+    const zoom = p < .74 ? p/.74 : 1;
+    camera.position.z = 4.65 - zoom*1.65;
+    camera.position.x += ((mx*.20)-camera.position.x)*.035;
+    camera.position.y += ((-my*.14)-camera.position.y)*.035;
+    camera.lookAt(0,0,0);
+
+    const fade = p < .68 ? 1 : Math.max(0,(1-p)/.32);
+    material.opacity=.92*fade;
+    coreMaterial.opacity=.92*fade;
+    bgMaterial.opacity=.34*(.65+.35*fade);
+
+    const scale=1+p*.26;
+    galaxy.scale.setScalar(scale);
+
+    renderer.render(scene,camera);
+  }
+
+  renderer.render(scene,camera);
+  if(!reduceGalaxyMotion) requestAnimationFrame(renderGalaxy);
+
+  // Reduced-motion users still get a static branded galaxy.
+  if(reduceGalaxyMotion){
+    material.opacity=.76;
+    coreMaterial.opacity=.78;
+    bgMaterial.opacity=.24;
+    renderer.render(scene,camera);
+  }
+})();
