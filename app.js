@@ -17,7 +17,25 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 
     /* =====================================================
        INTRO — REAL SCROLL TRANSITION
+       Mobile first-load centering fix:
+       keep xPercent/yPercent inside GSAP so its transform
+       never removes the CSS translate(-50%, -50%).
     ===================================================== */
+    if (window.gsap) {
+      gsap.set('#introCore',{
+        xPercent:-50,
+        yPercent:-50,
+        x:0,
+        y:0,
+        transformOrigin:'50% 50%'
+      });
+      gsap.set('#introCaption',{
+        xPercent:-50,
+        x:0,
+        transformOrigin:'50% 50%'
+      });
+    }
+
     if (window.gsap && window.ScrollTrigger && !reducedMotion) {
       const introTl = gsap.timeline({
         defaults:{ease:'none'},
@@ -31,12 +49,16 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 
       introTl
         .fromTo('#introCore',
-          {scale:.78,opacity:.30,z:-160,rotateX:7},
-          {scale:1,opacity:1,z:0,rotateX:0,duration:.24,ease:'power2.out'}
+          {xPercent:-50,yPercent:-50,x:0,y:0,scale:.78,opacity:.30,z:-160,rotateX:7},
+          {xPercent:-50,yPercent:-50,x:0,y:0,scale:1,opacity:1,z:0,rotateX:0,duration:.24,ease:'power2.out'}
         )
         .to('#introCaption',{opacity:1,duration:.08},0)
         .to('#introCaption',{opacity:0,y:-30,duration:.18},.34)
         .to('#introCore',{
+          xPercent:-50,
+          yPercent:-50,
+          x:0,
+          y:0,
           scale:3.7,
           z:500,
           rotateX:-8,
@@ -61,6 +83,8 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
         scrollTrigger:{trigger:'#hero',start:'top 78%',toggleActions:'play none none reverse'}
       });
     } else {
+      window.gsap?.set('#introCore',{xPercent:-50,yPercent:-50,x:0,y:0});
+      window.gsap?.set('#introCaption',{xPercent:-50,x:0});
       window.gsap?.set('.site-header',{opacity:1,y:0,pointerEvents:'auto'});
     }
 

@@ -1857,3 +1857,27 @@ a, button{
   .galaxy-canvas{opacity:.60}
   .galaxy-core-glow{opacity:.55}
 }
+
+
+/* =========================================================
+   MOBILE INTRO FIRST-PAINT STABILITY
+   Gives the intro logo a stable centered box before GSAP runs.
+========================================================= */
+#intro .intro-core{
+  left:50%!important;
+  top:50%!important;
+  margin:0!important;
+}
+
+@media (max-width:850px){
+  #intro .intro-core{
+    left:50%!important;
+    top:50%!important;
+  }
+}
+
+@media (max-height:760px) and (max-width:850px){
+  #intro .intro-core{
+    top:45%!important;
+  }
+}
