@@ -855,6 +855,8 @@
     .teacher-card:hover .teacher-photo.photo-hussein{transform:translateY(-7px) scale(.975)}
     .teacher-photo.photo-qusay{transform:scale(.94);transform-origin:center bottom;object-position:center top}
     .teacher-card:hover .teacher-photo.photo-qusay{transform:translateY(-7px) scale(.975)}
+    .teacher-photo.photo-nadia{transform:scale(.94);transform-origin:center bottom;object-position:center bottom}
+    .teacher-card:hover .teacher-photo.photo-nadia{transform:translateY(-7px) scale(.975)}
     .teacher-placeholder{
       position:relative;
       z-index:2;
@@ -929,6 +931,8 @@
       .teacher-card:hover .teacher-photo.photo-hussein{transform:translateY(-5px) scale(.955)}
       .teacher-photo.photo-qusay{transform:scale(.92)}
       .teacher-card:hover .teacher-photo.photo-qusay{transform:translateY(-5px) scale(.955)}
+      .teacher-photo.photo-nadia{transform:scale(.92)}
+      .teacher-card:hover .teacher-photo.photo-nadia{transform:translateY(-5px) scale(.955)}
     }
 
 /* CSP-safe replacements for the former inline chart styles */
@@ -1449,7 +1453,8 @@ a, button{
   .teacher-card:hover .teacher-photo.photo-moataz,
   .teacher-card:hover .teacher-photo.photo-daleer,
   .teacher-card:hover .teacher-photo.photo-hussein,
-  .teacher-card:hover .teacher-photo.photo-qusay{
+  .teacher-card:hover .teacher-photo.photo-qusay,
+  .teacher-card:hover .teacher-photo.photo-nadia{
     filter:drop-shadow(0 22px 24px rgba(0,0,0,.34)) saturate(.98) contrast(1.02);
   }
 
