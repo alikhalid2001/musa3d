@@ -1,7 +1,9 @@
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const saveData = !!(navigator.connection && navigator.connection.saveData);
+    const weakDevice = (navigator.deviceMemory && navigator.deviceMemory <= 4) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
     if (window.gsap && window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);
-      ScrollTrigger.config({ignoreMobileResize:true});
+      ScrollTrigger.config({ignoreMobileResize:true,limitCallbacks:true});
     }
 
     /* cursor */
@@ -239,7 +241,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
        CINEMATIC APP — THE PEN DRAWS THE ENTIRE REAL LOGO
     ===================================================== */
     if (window.gsap && window.ScrollTrigger && !reducedMotion) {
-      const appPinDistance = () => Math.round(window.innerHeight * (window.innerWidth <= 850 ? 2.9 : 3.35));
+      const appPinDistance = () => Math.round(window.innerHeight * (window.innerWidth <= 850 ? 2.35 : 3.15));
       const board = document.querySelector('#drawBoard');
       const pen = document.querySelector('#appPen');
       const paintSvg = document.querySelector('#logoPaintSvg');
@@ -267,10 +269,15 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
         });
       }
 
+      let lastPenPath = null;
+      let lastPenAt = -1;
       function putPenOnPath(path, progress, extraRotation = 0) {
         if (!path || !pen || !penMetrics) return;
         const total = pathLengths.get(path) || path.getTotalLength();
         const at = Math.max(0, Math.min(1, progress));
+        if (innerWidth <= 850 && path === lastPenPath && Math.abs(at - lastPenAt) < .012) return;
+        lastPenPath = path;
+        lastPenAt = at;
         const point = path.getPointAtLength(total * at);
         const point2 = path.getPointAtLength(Math.min(total, total * at + 2));
         const x = penMetrics.offsetX + point.x * penMetrics.scaleX;
@@ -453,8 +460,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
        THREE.JS EDUCATIONAL BACKGROUND
     ===================================================== */
     (function(){
-      const saveData = navigator.connection && navigator.connection.saveData;
-      if(!window.THREE||reducedMotion||innerWidth<900||saveData)return;
+      if(!window.THREE||reducedMotion||innerWidth<900||saveData||weakDevice)return;
       const canvas=document.querySelector('#three-canvas');
       const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:false,powerPreference:'high-performance'});
       renderer.setPixelRatio(Math.min(devicePixelRatio,1.15));
@@ -472,14 +478,14 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
       }
 
       const sheetMat=new THREE.MeshBasicMaterial({color:0xd7d0be,transparent:true,opacity:.055,side:THREE.DoubleSide});
-      for(let i=0;i<8;i++){
+      for(let i=0;i<6;i++){
         const sheet=new THREE.Mesh(new THREE.BoxGeometry(.85,1.15,.02),sheetMat.clone());
         sheet.position.set((Math.random()-.5)*12,(Math.random()-.5)*9,-2-Math.random()*7);
         sheet.rotation.set(Math.random()*1.2,Math.random()*1.4,Math.random()*1.2);
         sheet.userData.baseY=sheet.position.y;sheet.userData.offset=Math.random()*Math.PI*2;sheet.userData.speed=.4+Math.random()*.6;world.add(sheet);
       }
 
-      const count=420,positions=new Float32Array(count*3);
+      const count=280,positions=new Float32Array(count*3);
       for(let i=0;i<count;i++){
         positions[i*3]=(Math.random()-.5)*18;
         positions[i*3+1]=(Math.random()-.5)*12;
@@ -495,7 +501,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 
       function animate(now=0){
         requestAnimationFrame(animate);
-        if(document.hidden || now-lastFrame<20)return;
+        if(document.hidden || now-lastFrame<33)return;
         lastFrame=now;
         const t=clock.getElapsedTime();
         camera.position.x+=(mx*.20-camera.position.x)*.04;

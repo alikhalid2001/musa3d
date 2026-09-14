@@ -1657,3 +1657,27 @@ a, button{
     transform:none;
   }
 }
+
+
+/* =========================================================
+   PERFORMANCE PASS — MOBILE / LOW-COST VISUALS
+========================================================= */
+@media (max-width:850px){
+  .grain,.cursor-glow{display:none!important}
+  .site-header,.social-bar{
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+  .scene-glow{opacity:.20!important}
+  .floating-chip{box-shadow:0 10px 22px rgba(0,0,0,.16)}
+  .teacher-card,.service-card,.service-detail{box-shadow:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+  }
+}
