@@ -111,7 +111,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
       const teacherMedia = gsap.matchMedia();
 
       teacherMedia.add("(min-width: 851px)", () => {
-        gsap.set('#elitePlaneWrap',{x:210,y:120,scale:.16,rotation:-7,opacity:.06});
+        gsap.set('#elitePlaneWrap',{xPercent:-50,yPercent:-50,x:175,y:92,scale:.14,rotation:-7,opacity:.06});
         gsap.set('#planeBrandMark',{opacity:0,scale:.5,rotation:-8});
         gsap.set('.plane-name',{opacity:0,scale:.70});
         gsap.set('#teachersCinemaCaption',{opacity:0,y:42});
@@ -138,20 +138,20 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
           .to('.beam-b',{x:105,rotate:-18,duration:1,ease:'none'},0)
 
           /* The plane appears as a tiny object far behind the scene. */
-          .to('#elitePlaneWrap',{x:155,y:86,scale:.30,rotation:-6,opacity:.34,duration:.12,ease:'none'},.02)
+          .to('#elitePlaneWrap',{x:130,y:72,scale:.27,rotation:-6,opacity:.34,duration:.12,ease:'none'},.02)
           .to('#flightStreak',{opacity:.24,scaleX:.62,duration:.10,ease:'none'},.08)
           .to('.elite-cloud.c3',{opacity:.18,x:35,y:-6,duration:.18,ease:'none'},.08)
           .to('.elite-cloud.c4',{opacity:.15,x:-30,y:4,duration:.18,ease:'none'},.08)
 
           /* It flies toward the viewer, like a cinematic camera push. */
-          .to('#elitePlaneWrap',{x:75,y:38,scale:.58,rotation:-4,opacity:.72,duration:.17,ease:'none'},.15)
+          .to('#elitePlaneWrap',{x:62,y:30,scale:.52,rotation:-4,opacity:.72,duration:.17,ease:'none'},.15)
           .to('.plane-cinema .academy-ring',{opacity:.07,scale:.92,duration:.20,stagger:.014,ease:'none'},.17)
-          .to('#elitePlaneWrap',{x:14,y:4,scale:.90,rotation:-1.5,opacity:1,duration:.20,ease:'power2.out'},.31)
+          .to('#elitePlaneWrap',{x:12,y:0,scale:.82,rotation:-1.5,opacity:1,duration:.20,ease:'power2.out'},.31)
           .to('.elite-cloud.c1',{opacity:.26,x:35,y:-10,duration:.22,ease:'none'},.31)
           .to('.elite-cloud.c2',{opacity:.25,x:-34,y:-8,duration:.22,ease:'none'},.31)
           .to('.elite-cloud.c5',{opacity:.20,y:-15,duration:.22,ease:'none'},.34)
           .to('#flightStreak',{opacity:.44,scaleX:1,duration:.18,ease:'none'},.31)
-          .to('#elitePlaneWrap',{x:0,y:-8,scale:1.04,rotation:0,opacity:1,duration:.15,ease:'power2.out'},.49)
+          .to('#elitePlaneWrap',{x:0,y:-10,scale:.94,rotation:0,opacity:1,duration:.15,ease:'power2.out'},.49)
 
           /* Keep the real logo razor sharp as a separate HTML layer. */
           .fromTo('#planeBrandMark',{opacity:0,scale:.5,rotation:-8},{opacity:1,scale:1,rotation:-3,duration:.12,ease:'back.out(1.65)'},.44)
@@ -169,7 +169,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
           .fromTo('#teachersCinemaCaption',{opacity:0,y:42},{opacity:1,y:0,duration:.14,ease:'power3.out'},.88)
 
           /* A subtle last push, then dissolve into the actual teacher cards. */
-          .to('#elitePlaneWrap',{scale:1.11,y:-18,duration:.12,ease:'none'},.91)
+          .to('#elitePlaneWrap',{scale:1.02,y:-18,duration:.12,ease:'none'},.91)
           .to('.plane-name',{y:'-=4',duration:.10,stagger:.005,ease:'none'},.92)
           .to('#academyOrbit',{scale:1.08,opacity:0,duration:.16,ease:'power3.in'},.97)
           .to('#teachersCinemaCaption',{opacity:0,y:-20,duration:.10},.975);
@@ -187,7 +187,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
       });
 
       teacherMedia.add("(max-width: 850px)", () => {
-        gsap.set('#elitePlaneWrap',{x:76,y:52,scale:.32,rotation:-5,opacity:.12});
+        gsap.set('#elitePlaneWrap',{xPercent:-50,yPercent:-50,x:54,y:40,scale:.28,rotation:-5,opacity:.12});
         gsap.set('#planeBrandMark',{opacity:0,scale:.70});
         gsap.set('.plane-name',{opacity:0,scale:.82});
         gsap.set('#teachersCinemaCaption',{opacity:0,y:20});
@@ -207,14 +207,14 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
         });
 
         mobileTeacherTl
-          .to('#elitePlaneWrap',{x:32,y:24,scale:.56,rotation:-3,opacity:.52,duration:.20},0)
+          .to('#elitePlaneWrap',{x:24,y:18,scale:.48,rotation:-3,opacity:.52,duration:.20},0)
           .to('#flightStreak',{opacity:.20,scaleX:.70,duration:.18},.05)
-          .to('#elitePlaneWrap',{x:0,y:0,scale:.88,rotation:-1,opacity:1,duration:.24},.18)
+          .to('#elitePlaneWrap',{x:0,y:-2,scale:.76,rotation:-1,opacity:1,duration:.24},.18)
           .to('.elite-cloud.c1',{opacity:.17,x:18,y:-6,duration:.25},.18)
           .to('.elite-cloud.c2',{opacity:.16,x:-18,y:-5,duration:.25},.18)
           .to('.elite-cloud.c5',{opacity:.12,y:-8,duration:.25},.20)
           .to('.plane-cinema .academy-ring',{opacity:.05,scale:1,duration:.20,stagger:.012},.20)
-          .to('#elitePlaneWrap',{scale:1.02,y:-6,duration:.16},.40)
+          .to('#elitePlaneWrap',{scale:.88,y:-8,duration:.16},.40)
           .to('#planeBrandMark',{opacity:1,scale:1,duration:.10},.39)
           .fromTo('.name-1',{x:30,y:7,opacity:0,scale:.82},{x:0,y:0,opacity:1,scale:1,duration:.075},.50)
           .fromTo('.name-2',{x:30,y:-6,opacity:0,scale:.82},{x:0,y:0,opacity:1,scale:1,duration:.075},.58)
@@ -223,7 +223,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
           .fromTo('.name-5',{y:-20,opacity:0,scale:.82},{y:0,opacity:1,scale:1,duration:.075},.78)
           .fromTo('.name-6',{y:20,opacity:0,scale:.82},{y:0,opacity:1,scale:1,duration:.075},.84)
           .to('#teachersCinemaCaption',{opacity:1,y:0,duration:.10},.90)
-          .to('#elitePlaneWrap',{scale:1.05,y:-10,duration:.10},.93);
+          .to('#elitePlaneWrap',{scale:.94,y:-14,duration:.10},.93);
 
         gsap.from('.teachers-grid .teacher-card',{
           opacity:0,y:42,stagger:.05,duration:.50,ease:'power2.out',
