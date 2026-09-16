@@ -87,7 +87,7 @@
     /* =========================================================
        INTRO — SCROLL DRIVEN LOGO JOURNEY
     ========================================================= */
-    .intro-journey{height:235vh;position:relative;background:var(--bg-deep)}
+    .intro-journey{height:320vh;position:relative;background:var(--bg-deep)}
     .intro-sticky{
       position:sticky;top:0;height:100vh;overflow:hidden;perspective:1800px;
       background:
@@ -528,7 +528,7 @@
        This keeps the animation alive without GSAP pinning or expensive 3D work. */
     @media(max-width:850px){
       .teachers-cinematic-wrap{
-        min-height:165svh;
+        min-height:235svh;
         position:relative;
       }
       .teachers-cinematic-stage{
@@ -738,7 +738,7 @@
       .cursor-glow{display:none}
       .site-header{top:10px;min-height:68px;grid-template-columns:1fr auto;width:94vw;border-radius:20px}
       .nav{display:none}.header-cta{font-size:12px;min-height:40px;padding:0 13px}.brand-copy small{display:none}.brand-logo{width:48px;height:48px;flex-basis:48px}.brand-orbit{width:58px;height:58px}
-      .intro-journey{height:210vh}.intro-core{width:88vw}.intro-logo{width:82vw;max-width:340px}.intro-ring.r2{inset:32px}.intro-ring.r3{inset:62px}.intro-caption strong{font-size:28px}.intro-bridge h2{font-size:clamp(48px,14vw,78px)}
+      .intro-journey{height:275vh}.intro-core{width:88vw}.intro-logo{width:82vw;max-width:340px}.intro-ring.r2{inset:32px}.intro-ring.r3{inset:62px}.intro-caption strong{font-size:28px}.intro-bridge h2{font-size:clamp(48px,14vw,78px)}
       .hero{min-height:132vh;padding-top:110px}.hero-grid{grid-template-columns:1fr;gap:25px}.hero-copy{padding-top:35px}.hero h1{font-size:clamp(50px,14vw,78px)}.hero-copy>p{font-size:18px}.hero-stats{gap:10px}.hero-stats strong{font-size:18px}.hero-stats span{font-size:10px}.hero-visual{min-height:520px}.visual-halo{width:390px}.exam-stack{width:300px;height:410px}.paper-front{padding:22px}.answer-row{height:51px}.hero-brand-float{width:118px;height:118px;top:-18px;right:-14px}.hero-brand-float img{width:102px;height:90px}
       .app-section,.services-section,.teachers-section{padding:100px 0}.app-layout{grid-template-columns:1fr}.phone-stage{order:2;min-height:620px}.app-copy{order:1}.section-heading{grid-template-columns:1fr;gap:20px;margin-bottom:45px}.section-heading h2,.app-copy h2{font-size:clamp(46px,12vw,70px)}
       .services-grid{grid-template-columns:1fr}.service-card{min-height:260px}.service-card strong{margin-top:45px}.service-detail{grid-template-columns:1fr;gap:14px}.detail-number{font-size:36px}.detail-badge{justify-self:start}

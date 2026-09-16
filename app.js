@@ -72,7 +72,9 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
           {opacity:1,scale:1,z:0,rotateX:0,duration:.30,ease:'power3.out'},
           .50
         )
-        .to('#introBridge',{opacity:0,scale:1.08,z:160,duration:.20,ease:'power2.in'},.80);
+        /* Keep the main promise on screen while the user continues scrolling. */
+        .to('#introBridge',{opacity:1,scale:1,z:0,rotateX:0,duration:.42,ease:'none'},.80)
+        .to('#introBridge',{opacity:0,scale:1.08,z:160,duration:.20,ease:'power2.in'},1.22);
 
       gsap.to('.site-header',{
         opacity:1,
@@ -147,7 +149,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
           scrollTrigger:{
             trigger:'#teachersCinemaStage',
             start:'top top',
-            end:()=>`+=${Math.round(window.innerHeight * 2.45)}`,
+            end:()=>`+=${Math.round(window.innerHeight * 3.35)}`,
             scrub:.34,
             pin:true,
             pinSpacing:true,
@@ -192,11 +194,12 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
           .fromTo('.name-6',{y:48,opacity:0,scale:.70},{y:0,opacity:1,scale:1,duration:.11,ease:'back.out(1.35)'},.84)
           .fromTo('#teachersCinemaCaption',{opacity:0,y:42},{opacity:1,y:0,duration:.14,ease:'power3.out'},.88)
 
-          /* A subtle last push, then dissolve into the actual teacher cards. */
-          .to('#elitePlaneWrap',{scale:1.02,y:-18,duration:.12,ease:'none'},.91)
-          .to('.plane-name',{y:'-=4',duration:.10,stagger:.005,ease:'none'},.92)
-          .to('#academyOrbit',{scale:1.08,opacity:0,duration:.16,ease:'power3.in'},.97)
-          .to('#teachersCinemaCaption',{opacity:0,y:-20,duration:.10},.975);
+          /* Hold the teachers message for a much longer scroll interval. */
+          .to('#elitePlaneWrap',{scale:1.02,y:-18,duration:.22,ease:'none'},.94)
+          .to('.plane-name',{y:'-=4',duration:.18,stagger:.005,ease:'none'},.95)
+          .to('#teachersCinemaCaption',{opacity:1,y:0,duration:.40,ease:'none'},1.00)
+          .to('#academyOrbit',{scale:1.08,opacity:0,duration:.16,ease:'power3.in'},1.36)
+          .to('#teachersCinemaCaption',{opacity:0,y:-20,duration:.12},1.40);
 
         gsap.from('.teachers-grid .teacher-card',{
           opacity:0,y:88,z:-110,rotateY:(i)=>i%2?8:-8,scale:.94,
@@ -246,8 +249,10 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
           .fromTo('.name-4',{x:-30,y:7,opacity:0,scale:.82},{x:0,y:0,opacity:1,scale:1,duration:.075},.74)
           .fromTo('.name-5',{y:-20,opacity:0,scale:.82},{y:0,opacity:1,scale:1,duration:.075},.78)
           .fromTo('.name-6',{y:20,opacity:0,scale:.82},{y:0,opacity:1,scale:1,duration:.075},.84)
-          .to('#teachersCinemaCaption',{opacity:1,y:0,duration:.10},.90)
-          .to('#elitePlaneWrap',{scale:.94,y:-14,duration:.10},.93);
+          .to('#teachersCinemaCaption',{opacity:1,y:0,duration:.12},.88)
+          .to('#elitePlaneWrap',{scale:.94,y:-14,duration:.22},.96)
+          .to('#teachersCinemaCaption',{opacity:1,y:0,duration:.38,ease:'none'},1.06)
+          .to('#teachersCinemaCaption',{opacity:0,y:-16,duration:.12},1.44);
 
         gsap.from('.teachers-grid .teacher-card',{
           opacity:0,y:42,stagger:.05,duration:.50,ease:'power2.out',
