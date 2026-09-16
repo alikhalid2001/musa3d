@@ -16,26 +16,9 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
     },{passive:true});
 
     /* =====================================================
-       INTRO — REAL SCROLL TRANSITION
-       Mobile first-load centering fix:
-       keep xPercent/yPercent inside GSAP so its transform
-       never removes the CSS translate(-50%, -50%).
+       INTRO — CINEMATIC BUILDING JOURNEY
+       Scroll: galaxy -> approach building -> enter -> lobby -> hero.
     ===================================================== */
-    if (window.gsap) {
-      gsap.set('#introCore',{
-        xPercent:-50,
-        yPercent:-50,
-        x:0,
-        y:0,
-        transformOrigin:'50% 50%'
-      });
-      gsap.set('#introCaption',{
-        xPercent:-50,
-        x:0,
-        transformOrigin:'50% 50%'
-      });
-    }
-
     if (window.gsap && window.ScrollTrigger && !reducedMotion) {
       const introTl = gsap.timeline({
         defaults:{ease:'none'},
@@ -43,50 +26,108 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
           trigger:'#intro',
           start:'top top',
           end:'bottom bottom',
-          scrub:.45
+          scrub:.65,
+          invalidateOnRefresh:true
         }
       });
 
+      gsap.set('#musaBuilding',{scale:.38,y:38,rotateX:2,transformOrigin:'50% 82%'});
+      gsap.set('#buildingIntroCopy',{opacity:1,y:0});
+      gsap.set('#lobbyStage',{opacity:0,scale:.78,transformOrigin:'50% 50%'});
+      gsap.set('#lobbyDepth',{scale:.84,z:-140,transformOrigin:'50% 50%'});
+      gsap.set('#lobbyCaption',{opacity:0,y:24});
+      gsap.set('#introExitGlow',{opacity:0});
+
       introTl
-        .fromTo('#introCore',
-          {xPercent:-50,yPercent:-50,x:0,y:0,scale:.78,opacity:.30,z:-160,rotateX:7},
-          {xPercent:-50,yPercent:-50,x:0,y:0,scale:1,opacity:1,z:0,rotateX:0,duration:.24,ease:'power2.out'}
-        )
-        .to('#introCaption',{opacity:1,duration:.08},0)
-        .to('#introCaption',{opacity:0,y:-30,duration:.18},.34)
-        .to('#introCore',{
-          xPercent:-50,
-          yPercent:-50,
-          x:0,
-          y:0,
-          scale:3.7,
-          z:500,
-          rotateX:-8,
-          rotateY:8,
-          opacity:0,
-          duration:.34,
-          ease:'power3.in'
-        },.46)
-        .fromTo('#introBridge',
-          {opacity:0,scale:.72,z:-500,rotateX:13},
-          {opacity:1,scale:1,z:0,rotateX:0,duration:.30,ease:'power3.out'},
-          .50
-        )
-        .to('#introBridge',{opacity:0,scale:1.08,z:160,duration:.20,ease:'power2.in'},.80);
+        // Outer galaxy / distant headquarters.
+        .to('#musaBuilding',{scale:.52,y:22,duration:.12,ease:'power1.out'},0)
+        .to('.city-silhouette',{opacity:.28,duration:.12},0)
+        .to('#buildingIntroCopy',{opacity:1,duration:.09},0)
+
+        // Approach the glass building.
+        .to('#musaBuilding',{scale:1.08,y:40,rotateX:0,duration:.25,ease:'power2.inOut'},.13)
+        .to('.journey-road',{opacity:.82,duration:.18},.14)
+        .to('#buildingIntroCopy',{opacity:0,y:-24,duration:.12},.25)
+        .to('.city-silhouette',{opacity:.06,scale:1.12,duration:.16},.27)
+
+        // Final push toward the entrance.
+        .to('#musaBuilding',{scale:1.88,y:118,duration:.17,ease:'power2.in'},.38)
+        .to('#entranceVolume',{scale:1.13,transformOrigin:'50% 100%',duration:.12},.41)
+        .to('#entryDoorLeft',{xPercent:-105,opacity:.18,duration:.10,ease:'power2.inOut'},.48)
+        .to('#entryDoorRight',{xPercent:105,opacity:.18,duration:.10,ease:'power2.inOut'},.48)
+        .to('.building-crown,.building-mid-logo',{opacity:.28,duration:.08},.50)
+
+        // Pass through the entrance and reveal the lobby.
+        .to('#musaBuilding',{scale:3.7,y:270,opacity:.04,filter:'blur(7px)',duration:.15,ease:'power3.in'},.53)
+        .to('.journey-road',{opacity:0,duration:.10},.55)
+        .to('#lobbyStage',{opacity:1,scale:1,duration:.17,ease:'power3.out'},.56)
+        .to('#lobbyDepth',{scale:1,z:0,duration:.17,ease:'power3.out'},.56)
+        .to('#lobbyCaption',{opacity:1,y:0,duration:.10,ease:'power2.out'},.65)
+
+        // Travel through the branded lobby.
+        .to('#lobbyDepth',{scale:1.24,z:170,duration:.19,ease:'power1.inOut'},.70)
+        .to('.lobby-wall-left',{x:-80,opacity:.52,duration:.15},.73)
+        .to('.lobby-wall-right',{x:80,opacity:.52,duration:.15},.73)
+        .to('#lobbyMainScreen',{scale:1.18,duration:.15},.75)
+        .to('#lobbyCaption',{opacity:0,y:-18,duration:.08},.79)
+
+        // Flash through the final screen into the existing hero hall.
+        .to('#introExitGlow',{opacity:.82,duration:.08,ease:'power2.in'},.84)
+        .to('#lobbyStage',{opacity:0,scale:1.48,filter:'blur(7px)',duration:.12,ease:'power2.in'},.85)
+        .to('#introExitGlow',{opacity:0,duration:.10,ease:'power2.out'},.92);
 
       gsap.to('.site-header',{
-        opacity:1,
-        y:0,
-        pointerEvents:'auto',
-        duration:.65,
-        ease:'power3.out',
-        scrollTrigger:{trigger:'#hero',start:'top 78%',toggleActions:'play none none reverse'}
+        opacity:1,y:0,pointerEvents:'auto',duration:.65,ease:'power3.out',
+        scrollTrigger:{trigger:'#hero',start:'top 80%',toggleActions:'play none none reverse'}
       });
     } else {
-      window.gsap?.set('#introCore',{xPercent:-50,yPercent:-50,x:0,y:0});
-      window.gsap?.set('#introCaption',{xPercent:-50,x:0});
+      window.gsap?.set('#musaBuilding',{scale:.72,y:20});
+      window.gsap?.set('#buildingIntroCopy',{opacity:1});
       window.gsap?.set('.site-header',{opacity:1,y:0,pointerEvents:'auto'});
     }
+
+    /* =====================================================
+       CONTINUOUS BUILDING ROOMS
+       Adds lightweight architectural depth behind existing sections.
+    ===================================================== */
+    (function installJourneyRooms(){
+      const configs = [
+        ['#hero','WELCOME HALL'],
+        ['#services','SERVICES WING'],
+        ['#teachers','EDUCATORS GALLERY'],
+        ['#app','APP LAB'],
+        ['.stats-section','RESULTS HALL'],
+        ['.social-strip','CONNECT'],
+        ['.site-footer','MUSA3D']
+      ];
+      configs.forEach(([selector,label])=>{
+        const section=document.querySelector(selector);
+        if(!section || section.querySelector(':scope > .room-shell')) return;
+        section.classList.add('journey-room');
+        const shell=document.createElement('div');
+        shell.className='room-shell';
+        shell.setAttribute('aria-hidden','true');
+        shell.innerHTML=`<div class="room-ceiling"></div><div class="room-floor"></div><div class="room-wall left"></div><div class="room-wall right"></div><div class="room-brand-screen"><img src="logo-ui.webp" alt=""></div><div class="room-label">${label}</div>`;
+        section.insertBefore(shell,section.firstChild);
+      });
+
+      if(window.gsap && window.ScrollTrigger && !reducedMotion){
+        document.querySelectorAll('.journey-room').forEach((section,index)=>{
+          const shell=section.querySelector(':scope > .room-shell');
+          if(!shell) return;
+          gsap.fromTo(shell,
+            {scale:1.08,opacity:.28,y:36},
+            {scale:1,opacity:.70,y:0,ease:'none',scrollTrigger:{trigger:section,start:'top 92%',end:'top 25%',scrub:true}}
+          );
+          const left=shell.querySelector('.room-wall.left');
+          const right=shell.querySelector('.room-wall.right');
+          if(left&&right){
+            gsap.fromTo(left,{x:-42},{x:10,ease:'none',scrollTrigger:{trigger:section,start:'top bottom',end:'bottom top',scrub:true}});
+            gsap.fromTo(right,{x:42},{x:-10,ease:'none',scrollTrigger:{trigger:section,start:'top bottom',end:'bottom top',scrub:true}});
+          }
+        });
+      }
+    })();
 
     /* =====================================================
        SECTION CAMERA TRANSITIONS
@@ -796,12 +837,12 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
     galaxy.rotation.y += ((mx*.12)-galaxy.rotation.y)*.035;
 
     const zoom = p < .74 ? p/.74 : 1;
-    camera.position.z = 4.65 - zoom*1.65;
+    camera.position.z = 4.65 - zoom*1.35;
     camera.position.x += ((mx*.20)-camera.position.x)*.035;
     camera.position.y += ((-my*.14)-camera.position.y)*.035;
     camera.lookAt(0,0,0);
 
-    const fade = p < .68 ? 1 : Math.max(0,(1-p)/.32);
+    const fade = p < .58 ? 1 : Math.max(0,(.78-p)/.20);
     material.opacity=.92*fade;
     coreMaterial.opacity=.92*fade;
     bgMaterial.opacity=.34*(.65+.35*fade);
